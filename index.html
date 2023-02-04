@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>法務省地図 on Leaflet</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.vectorgrid@1.3.0/dist/Leaflet.VectorGrid.bundled.min.js"></script>
+</head>
+
+<body>
+  <div id="map" style="position:absolute;top:0;left:0;bottom:0;right:0;"></div>
+  <script>
+    var map = L.map("map", {
+      contextmenu: true,
+      zoominfoControl: true,
+      zoomControl: false,
+      maxZoom: 23,
+      zoom: 16,
+      center: [37.0509, 140.8835]
+    });
+
+
+
+   <!-- 地理院タイル（シームレス空中写真） -->
+    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 16,
+      maxZoom: 23,
+      maxNativeZoom: 18
+    }).addTo(map);
+
+   <!-- 地理院タイル（淡色地図）【透過】 -->
+    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      opacity: 0.4,
+      minZoom: 16,
+      maxZoom: 19,
+      maxNativeZoom: 18
+    }).addTo(map);
+
+   <!-- 地理院タイル（淡色地図） -->
+    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 15
+    }).addTo(map);
+
+
+   <!-- 法務省地図 -->
+    L.vectorGrid.protobuf("https://x.optgeo.org/a/{z}/{x}/{y}.mvt", {
+      attribution: "<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
+      minZoom: 14,
+      maxZoom: 23,
+      minNativeZoom: 14,
+      maxNativeZoom: 16
+    }).addTo(map);
+  </script>
+</body>
+
+</html>
