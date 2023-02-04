@@ -55,7 +55,13 @@
       minZoom: 14,
       maxZoom: 23,
       minNativeZoom: 14,
-      maxNativeZoom: 16
+      maxNativeZoom: 16,
+      rendererFactory: L.canvas.tile,
+      vectorTileLayerStyles: {
+        "fude": {
+          color: "red",
+          weight: 0.2
+        }
     }).addTo(map);
   </script>
 </body>
