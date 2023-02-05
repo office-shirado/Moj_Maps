@@ -89,7 +89,9 @@
       maxZoom: 23,
       minNativeZoom: 14,
       maxNativeZoom: 16,
-      rendererFactory: L.canvas.tile,
+      rendererFactory: L.svg.tile,   <!-- L.svg.tile【ベクトル】、L.canvas.tile【ラスタ化】 -->
+
+
 
       vectorTileLayerStyles: {
         "fude": {
@@ -100,6 +102,12 @@
           weight: 0.1
         }
       }
+
+
+
+
+
+
     });
     Moj_map.addTo(MOJ_maps);	<!-- 法務省地図レイヤに入れる -->
 
@@ -179,8 +187,6 @@
 	info01.update(zoomLev);
 	info01.update(centerLatLng);
         });
-
-
 
 
 
