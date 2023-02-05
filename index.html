@@ -32,6 +32,8 @@
     map.doubleClickZoom.disable();
 
 
+   <!-- 現在地 -->
+    map.locate({setView: true, maxZoom: 16});
 
 
    <!-- 地理院タイル（シームレス空中写真） -->
@@ -80,8 +82,6 @@
    <!-- 法務省地図【追加】 -->
     Moj_Maps.addTo(map);
 
-   <!-- 現在地 -->
-    map.locate({setView: true, maxZoom: 16});
 
 
 
