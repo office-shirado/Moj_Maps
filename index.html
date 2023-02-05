@@ -11,11 +11,12 @@
   <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 
 
-
-
-
   <!-- 　ベクトルタイル -->
   <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
+
+  <!-- 　infoエリアスタイル -->
+  <link rel="stylesheet" href="css/style-info.css" />
+
 
 </head>
 
@@ -40,33 +41,49 @@
     map.locate({setView: true, maxZoom: 16});
 
 
+   <!-- レイヤグループ -->
+    var GSI_maps = new L.LayerGroup();
+    var MOJ_maps = new L.LayerGroup();
+
+    var officeLayer = new L.LayerGroup();
+    var adminLayer = new L.LayerGroup();
+
+
+
    <!-- 地理院タイル（シームレス空中写真） -->
-    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+   var GSI_seamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
       attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
       minZoom: 16,
       maxZoom: 23,
       maxNativeZoom: 18
-    }).addTo(map);
+    });
+    
+    GSI_seamlessphoto.addTo(GSI_maps);	<!-- 地理院タイルレイヤに入れる -->
+
 
    <!-- 地理院タイル（淡色地図）【透過】 -->
-    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+    var GSI_pale00 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
       attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
       opacity: 0.4,
       minZoom: 16,
       maxZoom: 19,
       maxNativeZoom: 18
-    }).addTo(map);
+    });
+    GSI_pale00.addTo(GSI_maps);	<!-- 地理院タイルレイヤに入れる -->
 
    <!-- 地理院タイル（淡色地図） -->
-    L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+    var GSI_pale = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
       attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
       minZoom: 5,
       maxZoom: 15
-    }).addTo(map);
+    });
+    GSI_pale.addTo(GSI_maps);	<!-- 地理院タイルレイヤに入れる -->
+
+
 
 
    <!-- 法務省地図【定義】 -->
-    var Moj_Maps = L.vectorGrid.protobuf("https://x.optgeo.org/a/{z}/{x}/{y}.mvt", {
+    var Moj_map = L.vectorGrid.protobuf("https://x.optgeo.org/a/{z}/{x}/{y}.mvt", {
       attribution: "<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
       minZoom: 15,
       maxZoom: 23,
@@ -81,20 +98,27 @@
         }
       }
     });
-
-   <!-- 法務省地図【追加】 -->
-    Moj_Maps.addTo(map);
+    Moj_map.addTo(MOJ_maps);	<!-- 法務省地図レイヤに入れる -->
 
 
 
-   <!-- レイヤグループ -->
-    var officeLayer = new L.LayerGroup();
-    var adminLayer = new L.LayerGroup();
+    GSI_maps.addTo(map);	<!-- 地理院タイルレイヤをマップに追加 -->
+    MOJ_maps.addTo(map);	<!-- 法務省地図レイヤをマップに追加 -->
 
-    var makerOverlays = {
-	"オフィス白土": officeLayer,
-	"行政機関": adminLayer
+
+   <!-- レイヤコントロール -->
+    var Overlays = {
+	"地理院タイル": GSI_maps,
+	"法務省地図": MOJ_maps
 	};
+
+    var LayerControl_01 = L.control.layers(null, Overlays);
+
+    LayerControl_01.addTo(map);
+
+
+
+
 
    <!-- オフィス白土 -->
     var Office = L.marker([37.05090, 140.88350]);
@@ -114,6 +138,58 @@
    <!-- マップ追加【レイヤグループ】 -->
     officeLayer.addTo(map);
     adminLayer.addTo(map);
+
+
+   <!-- 情報欄（左下） -->
+    var info01 = L.control({
+	position : 'bottomleft'
+    });
+
+    info01.onAdd = function (map) {
+	this._div = L.DomUtil.create('div', 'info');
+	this.update();
+	return this._div;
+    };
+
+    info01.update = function (zoomLev,centerLatLng) {
+	zoomLev = map.getZoom();
+	centerLatLng = map.getCenter();
+	this._div.innerHTML =	"<center>＜中心座標＞</center>" + 
+				"Ｎ： " + Math.round(centerLatLng.lat * 100000)/100000 + "<br>" +
+				"Ｅ：" + Math.round(centerLatLng.lng * 100000)/100000 + "<br>" +
+				 "Zoom Level：" + zoomLev;
+    };
+
+    info01.addTo(map);
+
+
+
+   <!-- イベント【ズームエンド】 -->
+    map.on("zoomend", function(zoomLev,centerLatLng){
+	info01.update(zoomLev);
+	info01.update(centerLatLng);
+        });
+
+
+   <!-- イベント【ズームエンド】 -->
+    map.on("moveend", function(zoomLev,centerLatLng){
+	info01.update(zoomLev);
+	info01.update(centerLatLng);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
