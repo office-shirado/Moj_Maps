@@ -188,7 +188,20 @@
 	info01.update(centerLatLng);
         });
 
+    Moj_map.on("click", function (e) {
+            const { lat, lng } = e.latlng;
+            var selectPoint = L.popup([lat, lng])
+            selectPoint.setContent(
+			"市区町村：" + e.layer.properties.市区町村名 + '<br>' +
+			"大 字 名：" + e.layer.properties.大字名 + '<br>' +
+			"丁 目 名：" + e.layer.properties.丁目名 + '<br>' +
+			"小 字 名：" + e.layer.properties.小字名 + '<br>' +
+			"地　　番：" + e.layer.properties.地番
+			);
+ 	    selectPoint.addTo(map);
 
+
+          });
 
   </script>
 </body>
