@@ -90,9 +90,13 @@
       minNativeZoom: 14,
       maxNativeZoom: 16,
       rendererFactory: L.svg.tile,   <!-- L.svg.tile【ベクトル】、L.canvas.tile【ラスタ化】 -->
+      interactive: true, 	<!-- true:触れる -->
 
+      getFeatureId: function(feature) {
+              return feature.properties["地番"]
+      },
 
-
+      <!-- スタイル設定 -->
       vectorTileLayerStyles: {
         "fude": {
 	    fill: true,
@@ -102,12 +106,6 @@
           weight: 0.1
         }
       }
-
-
-
-
-
-
     });
     Moj_map.addTo(MOJ_maps);	<!-- 法務省地図レイヤに入れる -->
 
@@ -115,6 +113,8 @@
 
     GSI_maps.addTo(map);	<!-- 地理院タイルレイヤをマップに追加 -->
     MOJ_maps.addTo(map);	<!-- 法務省地図レイヤをマップに追加 -->
+
+
 
 
    <!-- レイヤコントロール -->
@@ -182,23 +182,11 @@
         });
 
 
-   <!-- イベント【ズームエンド】 -->
+   <!-- イベント【ムーブエンド】 -->
     map.on("moveend", function(zoomLev,centerLatLng){
 	info01.update(zoomLev);
 	info01.update(centerLatLng);
         });
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
