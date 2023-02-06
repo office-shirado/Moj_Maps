@@ -181,7 +181,7 @@
     };
 
     title.update = function () {
-	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b>(Ver1.01)" +"<br>"+
+	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b>(Ver1.02)" +"<br>"+
 			        "<a href='https://github.com/office-shirado/Moj_Maps' target='_blank'><small>Office Shirado（GitHub)</small></a>";
     };
 
@@ -236,18 +236,34 @@
     Moj_map.on("click", function (e) {
             const { lat, lng } = e.latlng;
             var selectPoint = L.popup([lat, lng]);
+
+	    var chizumei = e.layer.properties.地図名;
+	    var city = e.layer.properties.市区町村名;
+	    var oaza = e.layer.properties.大字名;
+	    var tyome = e.layer.properties.丁目名;
+	    var koaza = e.layer.properties.小字名;
+	    var chiban = e.layer.properties.地番;
+	    var zahyokei = e.layer.properties.座標系;
+	    var zahyochisyubetu = e.layer.properties.座標値種別;
+	    var sokuchikeihanbetu = e.layer.properties.測地系判別;
+	    var shukusyakubunbo = e.layer.properties.縮尺分母;
+	    var seidokubun = e.layer.properties.精度区分;
+
+	   if( oaza === undefined ) { oaza= "" };
+	   if( tyome === undefined ) { tyome = "" };
+	   if( koaza === undefined ) { koaza = "" };
+
+	   if( zahyochisyubetu === undefined ) { zahyochisyubetu = "-" };
+	   if( sokuchikeihanbetu === undefined ) { sokuchikeihanbetu = "-" };
+	   if( shukusyakubunbo === undefined ) { shukusyakubunbo = "-" };
+	   if( seidokubun === undefined ) { seidokubun = "-" };
+
             selectPoint.setContent(
-			"市区町村：" + e.layer.properties.市区町村名 + '<br>' +
-			"大 字 名：" + e.layer.properties.大字名 + '<br>' +
-			"丁 目 名：" + e.layer.properties.丁目名 + '<br>' +
-			"小 字 名：" + e.layer.properties.小字名 + '<br>' +
-			"地　番：" + e.layer.properties.地番 + '<br>' +
-			"地 図 名：" + e.layer.properties.地図名 + '<br>' +
-			"座標系：" + e.layer.properties.座標系 + '<br>' +
-			"縮　尺：1/" + e.layer.properties.縮尺分母 + '<br>' +
-			"座標値種別：" + e.layer.properties.座標値種別 + '<br>' +
-			"測地系判別：" + e.layer.properties.測地系判別 + '<br>' +
-			"精度区分：" + e.layer.properties.精度区分
+			"地番区域：" + '<b>' + city + oaza+ tyome+ koaza + '</b>' + '<br>' +
+			"地　番：" + '<b>' + chiban + '</b>' + '<br>' +
+			"地 図 名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
+			"座標系：" + zahyokei + "（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】" + '<br>' +
+			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）"
 			);
  	    selectPoint.addTo(map);
           });
