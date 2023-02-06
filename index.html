@@ -16,6 +16,15 @@
 
   <!-- 　infoエリアスタイル -->
   <style>
+	.title {
+		padding: 6px 8px;
+		font: 18px/20px Arial, Helvetica, sans-serif;
+		color: navy;
+		background: white;
+		background: rgba(255,255,255,0.8);
+		box-shadow: 0 0 15px rgba(0,0,0,0.2);
+		border-radius: 5px;
+	}
 	.info {
 		padding: 6px 8px;
 		font: 14px/16px Arial, Helvetica, sans-serif;
@@ -24,6 +33,7 @@
 		box-shadow: 0 0 15px rgba(0,0,0,0.2);
 		border-radius: 5px;
 	}
+
   </style>
 
 
@@ -159,6 +169,25 @@
     officeLayer.addTo(map);
     adminLayer.addTo(map);
 
+   <!-- タイトル（左上） -->
+    var title = L.control({
+	position : 'topleft'
+    });
+
+    title.onAdd = function (map) {
+	this._div = L.DomUtil.create('div', 'title');
+	this.update();
+	return this._div;
+    };
+
+    title.update = function (zoomLev,centerLatLng) {
+	zoomLev = map.getZoom();
+	centerLatLng = map.getCenter();
+	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b>(Ver1.01)";
+    };
+
+    title.addTo(map);
+
 
    <!-- 情報欄（左下） -->
     var info01 = L.control({
@@ -174,13 +203,10 @@
     info01.update = function (zoomLev,centerLatLng) {
 	zoomLev = map.getZoom();
 	centerLatLng = map.getCenter();
-	this._div.innerHTML =	"<center>＜中心座標＞</center>" + 
-				"Ｎ： " + Math.round(centerLatLng.lat * 100000)/100000 + "<br>" +
-				"Ｅ：" + Math.round(centerLatLng.lng * 100000)/100000 + "<br>" +
-				 "Zoom Level：" + zoomLev + "<br>" +
-				"<a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a>" +"<br>" +
-				"【今ここ何番地？：Ver1.00】"
-;
+	this._div.innerHTML =	"<center>＜中心座標＞" + "【ZL:" + zoomLev + "】</center>" +
+				"N: " + Math.round(centerLatLng.lat * 100000)/100000 + "  " + "E:" + Math.round(centerLatLng.lng * 100000)/100000 + "<br>" +
+				"<a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a>"+ "<br>" +
+				"<a href='https://github.com/office-shirado/Moj_Maps' target='_blank'>Office Shirado（GitHub）</a>";
     };
 
     info01.addTo(map);
@@ -198,6 +224,13 @@
     map.on("moveend", function(zoomLev,centerLatLng){
 	info01.update(zoomLev);
 	info01.update(centerLatLng);
+
+	   <!-- 行政機関表示・非表示 -->
+	if (map.getZoom() <13){
+        map.removeLayer(adminLayer);
+        } else {
+        map.addLayer(adminLayer);
+        }
         });
 
    <!-- イベント【クリック地点の属性表示】 -->
@@ -218,8 +251,6 @@
 			"精度区分：" + e.layer.properties.精度区分
 			);
  	    selectPoint.addTo(map);
-
-
           });
 
   </script>
