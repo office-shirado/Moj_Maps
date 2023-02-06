@@ -18,7 +18,7 @@
   <style>
 	.title {
 		padding: 6px 8px;
-		font: 18px/20px Arial, Helvetica, sans-serif;
+		font: 16px/18px Arial, Helvetica, sans-serif;
 		color: navy;
 		background: white;
 		background: rgba(255,255,255,0.8);
@@ -27,7 +27,7 @@
 	}
 	.info {
 		padding: 6px 8px;
-		font: 14px/16px Arial, Helvetica, sans-serif;
+		font: 12px/14px Arial, Helvetica, sans-serif;
 		background: white;
 		background: rgba(255,255,255,0.8);
 		box-shadow: 0 0 15px rgba(0,0,0,0.2);
@@ -180,10 +180,9 @@
 	return this._div;
     };
 
-    title.update = function (zoomLev,centerLatLng) {
-	zoomLev = map.getZoom();
-	centerLatLng = map.getCenter();
-	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b>(Ver1.01)";
+    title.update = function () {
+	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b>(Ver1.01)" +"<br>"+
+			        "<a href='https://github.com/office-shirado/Moj_Maps' target='_blank'><small>Office Shirado（GitHub)</small></a>";
     };
 
     title.addTo(map);
@@ -205,11 +204,11 @@
 	centerLatLng = map.getCenter();
 	this._div.innerHTML =	"<center>＜中心座標＞" + "【ZL:" + zoomLev + "】</center>" +
 				"N: " + Math.round(centerLatLng.lat * 100000)/100000 + "  " + "E:" + Math.round(centerLatLng.lng * 100000)/100000 + "<br>" +
-				"<a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a>"+ "<br>" +
-				"<a href='https://github.com/office-shirado/Moj_Maps' target='_blank'>Office Shirado（GitHub）</a>";
+				"<a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a>";
     };
 
     info01.addTo(map);
+
 
 
 
