@@ -10,8 +10,7 @@ var button_Locate = L.myButton(
 			timeout: 10000,
 			maximumAge: 0,
 			enableHighAccuracy: true,
-			setView: true,
-			Maxzoom: 16
+			setView: true
 		});
 	},
 	'現在地'					//ホバーテキスト
