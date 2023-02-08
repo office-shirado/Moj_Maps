@@ -180,7 +180,7 @@
     };
 
     title.update = function () {
-	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b><small>(Ver1.04)</small>" +"<br>"+
+	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b><small>(Ver1.05)</small>" +"<br>"+
 			        "<a href='https://github.com/office-shirado/Moj_Maps' target='_blank'><small>Office Shirado（GitHub)</small></a>";
     };
 
@@ -204,9 +204,10 @@
     info01.update = function (zoomLev,centerLatLng) {
 	zoomLev = map.getZoom();
 	centerLatLng = map.getCenter();
-	this._div.innerHTML =	"<center>＜中心座標＞" + "【ZL:" + zoomLev + "】</center>" +
-				"N: " + Math.round(centerLatLng.lat * 100000)/100000 + "  " + "E:" + Math.round(centerLatLng.lng * 100000)/100000 + "<br>" +
-				"<a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a>";
+	this._div.innerHTML =	"<b>ZL:" + zoomLev + "</b><small>(N: " + Math.round(centerLatLng.lat * 100000)/100000 + "  " + "E:" + Math.round(centerLatLng.lng * 100000)/100000 + ")</small><br>" +
+				"<a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a><br>" +
+"<small>(Supecial Thanks:MOJ,GSI,AMX)</small>"
+;
     };
 
     info01.addTo(map);
