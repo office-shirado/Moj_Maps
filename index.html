@@ -14,10 +14,6 @@
   <!-- 　ベクトルタイル -->
   <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
 
-  <!-- 空中写真設定-->
-  <script src="mymap/airphoto.js" type="text/javascript"></script>
-
-
 
   <!-- myButton設定用 -->
   <script src="js/myButton.js" type="text/javascript"></script>
@@ -133,17 +129,85 @@
     MOJ_maps.addTo(map);	<!-- 法務省地図レイヤをマップに追加 -->
 
 
+   <!-- 空中写真（1945年～1950年） -->
+    var ort_USA10 = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/ort_USA10/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 23,
+      minNativeZoom: 10,
+      maxNativeZoom: 17
+    });
+
+   <!-- 空中写真（1961年～1969年） -->
+    var ort_old10= L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/ort_old10/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 23,
+      minNativeZoom: 10,
+      maxNativeZoom: 17
+    });
+
+   <!-- 空中写真（1974年～1978年） -->
+    var gazo1 = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/gazo1/{z}/{x}/{y}.jpg', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 23,
+      minNativeZoom: 10,
+      maxNativeZoom: 17
+    });
+
+   <!-- 空中写真（1979年～1983年） -->
+    var gazo2 = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/gazo2/{z}/{x}/{y}.jpg', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 23,
+      minNativeZoom: 10,
+      maxNativeZoom: 17
+    });
+
+   <!-- 空中写真（1984年～1986年） -->
+    var gazo3 = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/gazo3/{z}/{x}/{y}.jpg', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 23,
+      minNativeZoom: 10,
+      maxNativeZoom: 17
+    });
+
+   <!-- 空中写真（1988年～1990年） -->
+    var gazo4 = L.tileLayer('http://cyberjapandata.gsi.go.jp/xyz/gazo4/{z}/{x}/{y}.jpg', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 23,
+      minNativeZoom: 10,
+      maxNativeZoom: 17
+    });
+
+
+
 
 
    <!-- レイヤコントロール -->
-    var Overlays = {
-	"地理院タイル": GSI_maps,
+    var OverLayer = {
 	"法務省地図": MOJ_maps
 	};
 
-    var LayerControl_01 = L.control.layers(null, Overlays);
+    var BaseLayer = {
+	"淡色地図・空中写真": GSI_maps,
+	"空中写真（1945年～1950年）": ort_USA10,
+	"空中写真（1961年～1969年）": ort_old10,
+	"空中写真（1974年～1978年）": gazo1,
+	"空中写真（1979年～1983年）": gazo2,
+	"空中写真（1984年～1986年）": gazo3,
+	"空中写真（1988年～1990年）": gazo4
+	};
+
+    var LayerControl_01 = L.control.layers(BaseLayer, OverLayer);
 
     LayerControl_01.addTo(map);
+
+
+
 
 
 
@@ -180,7 +244,7 @@
     };
 
     title.update = function () {
-	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b><small>(Ver1.05)</small>" +"<br>"+
+	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b><small>(Ver1.06)</small>" +"<br>"+
 			        "<a href='https://github.com/office-shirado/Moj_Maps' target='_blank'><small>Office Shirado（GitHub)</small></a>";
     };
 
