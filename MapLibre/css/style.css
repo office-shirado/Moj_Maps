@@ -18,19 +18,19 @@ body {
 	background: rgba(255,255,255,0.8);
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
 	border-radius: 5px;
-        width: 200px;
+        width: fit-content;
 	position: absolute;
         }
 
 #info02 {
 	padding: 6px 8px;
-	font: 14px/16px Arial, Helvetica, sans-serif;
-	color: navy;
+	font: 12px/14px Arial, Helvetica, sans-serif;
+	color: black;
 	background: white;
 	background: rgba(255,255,255,0.8);
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
 	border-radius: 5px;
-        width: 200px;
+        width: fit-content;
 	position: absolute;
 	bottom: 0; 
         }
