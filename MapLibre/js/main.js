@@ -96,6 +96,20 @@ var map = new maplibregl.Map({
     },
 });
 
+
+
+// 空中写真読込みしたい。（できない！！）
+// オープン時に現在地にジャンプしたい。（できない！！）
+map.on('load', function () {
+
+	// ロード時のアクションを入れたい。
+
+
+});
+
+
+
+
 //ダブルクリックズーム制御（しない）
 map.doubleClickZoom.disable();
 
@@ -116,7 +130,7 @@ map.addControl(new maplibregl.GeolocateControl({
     positionOptions: {
         enableHighAccuracy: true
     },
-    fitBoundsOptions: { maxZoom: 9 },
+    fitBoundsOptions: { maxZoom: 20 },
     trackUserLocation: false,
     showUserLocation: false
     }), 
