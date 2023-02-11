@@ -3,7 +3,7 @@ function getLocation(getLatLng) {
     map.flyTo({
 	center: [getLatLng.coords.longitude, getLatLng.coords.latitude], 
 	zoom: 16,
-	speed: 0.5,
+	speed: 0.8,
 	curve: 1
     });
 };
@@ -12,9 +12,9 @@ function getLocation(getLatLng) {
 var map = new maplibregl.Map({
     container: 'map',
     style: {
-//        center: [140.8835,37.0509], // 中心座標
-        center: [140.000,37.000], // 中心座標
-        zoom: 16, // ズームレベル
+//        center: [140.8835,37.0509], // 中心座標（白土）
+        center: [139.75417,35.67613], // 中心座標（法務省）
+        zoom: 17, // ズームレベル
         minZoom: 4,
         maxZoom: 23,
         version: 8,
