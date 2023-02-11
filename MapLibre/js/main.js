@@ -3,7 +3,10 @@ var map = new maplibregl.Map({
     style: {
         center: [140.8835,37.0509], // 中心座標
         zoom: 16, // ズームレベル
+        minZoom: 4,
+        maxZoom: 23,
         version: 8,
+
 	sources: {
             rtile: {
                 type: 'raster',
