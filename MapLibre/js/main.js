@@ -1,3 +1,18 @@
+function getLocation(getLatLng) {
+
+    map.flyTo({
+	center: [getLatLng.coords.longitude, getLatLng.coords.latitude], 
+	zoom: 16,
+	speed: 0.5,
+	curve: 1
+    });
+};
+
+
+
+
+
+
 var map = new maplibregl.Map({
     container: 'map',
     style: {
@@ -103,8 +118,7 @@ var map = new maplibregl.Map({
 map.on('load', function () {
 
 	// ロード時のアクションを入れたい。
-
-
+	navigator.geolocation.getCurrentPosition(getLocation)
 });
 
 
