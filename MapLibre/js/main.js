@@ -6,7 +6,7 @@ var map = new maplibregl.Map({
             rtile: {
                 type: 'raster',
                 tiles: [
-                    'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg',
+                    'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
                 ],
                 tileSize: 256,
                 attribution:
@@ -19,47 +19,10 @@ var map = new maplibregl.Map({
                 type: 'raster',
                 source: 'rtile',
                 minzoom: 0,
-                maxzoom: 23,
+                maxzoom: 22,
             },
         ],
-
-
-
     },
-    center: [140.8835,37.0509], // 中心座標
-    zoom: 16, // ズームレベル
+    center: [139.68786, 35.68355], // 中心座標
+    zoom: 13, // ズームレベル
 });
-
-
-// マップコントロール（拡大・縮小・方位）
-	map.addControl(new maplibregl.NavigationControl(), 'top-left');
-
-
-
-// 現在位置表示
-	map.addControl(new maplibregl.GeolocateControl({
-		positionOptions: {
-			enableHighAccuracy: true
-		},
-			fitBoundsOptions: { maxZoom: 9 },
-			trackUserLocation: true,
-			showUserLocation: true
-		}), 'top-left');
-
-
-
-
-    map.addSource('t_pale', {
-        type: 'raster',
-        tiles: ['https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png'],
-        tileSize: 256,
-    });
-    map.addLayer({
-        id: 't_pale',
-        type: 'raster',
-        source: 't_pale',
-        minzoom: 0,
-        maxzoom: 18,
-    });
-
-
