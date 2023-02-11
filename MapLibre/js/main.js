@@ -60,12 +60,15 @@ var map = new maplibregl.Map({
     },
 });
 
+//ダブルクリックズーム制御（しない）
+map.doubleClickZoom.disable();
 
-
+//ドラッグ回転制御（しない）
+map.dragRotate.disable();
 
 
 // マップコントロール（拡大・縮小・方位）
-map.addControl(new maplibregl.NavigationControl(), 'top-left');
+//map.addControl(new maplibregl.NavigationControl(), 'top-left');
 
 
 
@@ -75,8 +78,8 @@ map.addControl(new maplibregl.GeolocateControl({
         enableHighAccuracy: true
     },
     fitBoundsOptions: { maxZoom: 9 },
-    trackUserLocation: true,
-    showUserLocation: true
+    trackUserLocation: false,
+    showUserLocation: false
     }), 
     'top-left'
 );
