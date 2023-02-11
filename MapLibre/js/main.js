@@ -66,6 +66,9 @@ map.doubleClickZoom.disable();
 //ドラッグ回転制御（しない）
 map.dragRotate.disable();
 
+//タッチズーム回転制御（しない）
+map.touchZoomRotate.disableRotation();
+
 
 // マップコントロール（拡大・縮小・方位）
 //map.addControl(new maplibregl.NavigationControl(), 'top-left');
