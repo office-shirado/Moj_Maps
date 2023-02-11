@@ -158,10 +158,9 @@ map.on('click', 'fude-fill', (e) => {
 			'<b>' + '<big>' +city + oaza+ tyome+ koaza + " " + chiban + '</big>' + '</b>' + '<br>' +
 			"地番区域：" +  city + oaza+ tyome+ koaza + '<br>' +
 			"地　番：" + chiban + '<br>' +
-			"地 図 名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
+			"地図名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
 			"座標系：" + zahyokei + "<small>（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】</small>" + '<br>' +
 			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）"
-
 )
         .addTo(map);
     });
