@@ -65,20 +65,64 @@ var map = new maplibregl.Map({
 
 
 // マップコントロール（拡大・縮小・方位）
-	map.addControl(new maplibregl.NavigationControl(), 'top-left');
+map.addControl(new maplibregl.NavigationControl(), 'top-left');
 
 
 
 // 現在位置表示
-	map.addControl(new maplibregl.GeolocateControl({
-		positionOptions: {
-			enableHighAccuracy: true
-		},
-			fitBoundsOptions: { maxZoom: 9 },
-			trackUserLocation: true,
-			showUserLocation: true
-		}), 'top-left');
+map.addControl(new maplibregl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    fitBoundsOptions: { maxZoom: 9 },
+    trackUserLocation: true,
+    showUserLocation: true
+    }), 
+    'top-left'
+);
 
+
+
+
+map.on('click', 'fude-fill', (e) => {
+    var chizumei = e.features[0].properties['地図名'];
+    var city = e.features[0].properties['市区町村名'];
+    var oaza = e.features[0].properties['大字名'];
+    var tyome = e.features[0].properties['丁目名'];
+    var koaza = e.features[0].properties['小字名'];
+    var chiban = e.features[0].properties['地番'];
+    var zahyokei = e.features[0].properties['座標系'];
+    var zahyochisyubetu = e.features[0].properties['座標値種別'];
+    var sokuchikeihanbetu = e.features[0].properties['測地系判別'];
+    var shukusyakubunbo = e.features[0].properties['縮尺分母'];
+    var seidokubun = e.features[0].properties['精度区分'];
+
+
+   if( oaza === undefined ) { oaza= "" };
+   if( tyome === undefined ) { tyome = "" };
+   if( koaza === undefined ) { koaza = "" };
+
+   if( zahyochisyubetu === undefined ) { zahyochisyubetu = "-" };
+   if( sokuchikeihanbetu === undefined ) { sokuchikeihanbetu = "-" };
+   if( shukusyakubunbo === undefined ) { shukusyakubunbo = "-" };
+   if( seidokubun === undefined ) { seidokubun = "-" };
+
+
+
+
+    new maplibregl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(
+			'<b>' + '<big>' +city + oaza+ tyome+ koaza + " " + chiban + '</big>' + '</b>' + '<br>' +
+			"地番区域：" +  city + oaza+ tyome+ koaza + '<br>' +
+			"地　番：" + chiban + '<br>' +
+			"地 図 名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
+			"座標系：" + zahyokei + "<small>（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】</small>" + '<br>' +
+			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）"
+
+)
+        .addTo(map);
+    });
 
 
 
