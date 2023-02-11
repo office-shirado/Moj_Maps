@@ -8,6 +8,7 @@ var map = new maplibregl.Map({
         version: 8,
 
 	sources: {
+            // シームレス空中写真
             GSI_seamlessphoto: {
                 type: 'raster',
                 tiles: [
@@ -16,6 +17,18 @@ var map = new maplibregl.Map({
                 tileSize: 256,
                 attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
             },
+
+            // 淡色地図
+            GSI_pale: {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png',
+                ],
+                tileSize: 256,
+                attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+            },
+
+            // 法務省地図
             MOJ_Map: {
                 type: 'vector',
                 tiles: ['https://x.optgeo.org/a/{z}/{x}/{y}.mvt'],
@@ -27,14 +40,37 @@ var map = new maplibregl.Map({
 
 
             layers: [
+                // レイヤ設定（シームレス空中写真）
                 {
                   id: 'GSI_seamlessphoto',
                   type: 'raster',
                   source: 'GSI_seamlessphoto',
-                  minzoom: 0,
+                  minzoom: 15,
                   maxzoom: 23,
                 },
 
+                // レイヤ設定（淡色地図01）
+                {
+                  id: 'GSI_pale01',
+                  type: 'raster',
+                  source: 'GSI_pale',
+                  minzoom: 0,
+                  maxzoom: 15,
+                },
+
+                // レイヤ設定（淡色地図02）
+                {
+                  id: 'GSI_pale02',
+                  type: 'raster',
+                  source: 'GSI_pale',
+                  minzoom: 15,
+                  maxzoom: 18,
+                  'paint': {
+                    "raster-opacity": 0.4,
+                  },
+                },
+
+                // レイヤ設定（法務省地図）【ポリゴン】
                 {
                   id: 'fude-fill',
                   type: 'fill',
@@ -46,7 +82,7 @@ var map = new maplibregl.Map({
                   },
                 },
 
-
+                // レイヤ設定（法務省地図）【ライン】
                 {
                   id: 'fude-line',
                   type: 'line',
