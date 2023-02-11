@@ -1,0 +1,278 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>法務省地図 on Leaflet【今ここ何番地？】</title>
+  <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+
+  <!-- 【Leallet】 -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+
+  <!-- 　ベクトルタイル -->
+  <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
+
+  <!-- 空中写真設定-->
+  <script src="mymap/airphoto.js" type="text/javascript"></script>
+
+
+
+  <!-- myButton設定用 -->
+  <script src="js/myButton.js" type="text/javascript"></script>
+
+  <script src="https://kit.fontawesome.com/bffe8bb7d2.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://kit.fontawesome.com/bffe8bb7d2.css" crossorigin="anonymous">
+
+
+  <!-- myButton設定読込み -->
+  <script src="js/myButton_Custom.js" type="text/javascript"></script>
+
+
+
+
+  <!--- スタイルシート -->
+  <link rel="stylesheet" href="css/style-info.css" />	<!-- infoスタイル -->
+
+
+</head>
+
+<body>
+  <div id="map" style="position:absolute;top:0;left:0;bottom:0;right:0;"></div>
+  <script>
+    var map = L.map("map", {
+      contextmenu: true,
+      zoominfoControl: true,
+      zoomControl: false,
+      maxZoom: 23,
+      zoom: 16,
+      center: [37.0509, 140.8835]
+    });
+
+
+    <!-- ダブルクリックズーム無効 -->
+    map.doubleClickZoom.disable();
+
+
+    <!-- 現在地 -->
+    map.locate({setView: true, maxZoom: 16});
+
+
+   <!-- レイヤグループ -->
+    var GSI_maps = new L.LayerGroup();
+    var MOJ_maps = new L.LayerGroup();
+
+    var officeLayer = new L.LayerGroup();
+    var adminLayer = new L.LayerGroup();
+
+
+
+   <!-- 地理院タイル（シームレス空中写真） -->
+   var GSI_seamlessphoto = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 16,
+      maxZoom: 23,
+      maxNativeZoom: 18
+    });
+    
+    GSI_seamlessphoto.addTo(GSI_maps);	<!-- 地理院タイルレイヤに入れる -->
+
+
+   <!-- 地理院タイル（淡色地図）【透過】 -->
+    var GSI_pale00 = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      opacity: 0.4,
+      minZoom: 16,
+      maxZoom: 19,
+      maxNativeZoom: 18
+    });
+    GSI_pale00.addTo(GSI_maps);	<!-- 地理院タイルレイヤに入れる -->
+
+   <!-- 地理院タイル（淡色地図） -->
+    var GSI_pale = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+      attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+      minZoom: 5,
+      maxZoom: 15
+    });
+    GSI_pale.addTo(GSI_maps);	<!-- 地理院タイルレイヤに入れる -->
+
+
+
+
+   <!-- 法務省地図【定義】 -->
+    var Moj_map = L.vectorGrid.protobuf("https://x.optgeo.org/a/{z}/{x}/{y}.mvt", {
+      attribution: "<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
+      minZoom: 15,
+      maxZoom: 23,
+      minNativeZoom: 14,
+      maxNativeZoom: 16,
+      rendererFactory: L.svg.tile,   <!-- L.svg.tile【ベクトル】、L.canvas.tile【ラスタ化】 -->
+      interactive: true, 	<!-- true:触れる -->
+
+      getFeatureId: function(feature) {
+              return feature.properties["fude"]
+      },
+
+      <!-- スタイル設定 -->
+      vectorTileLayerStyles: {
+        "fude": {
+	    fill: true,
+	    fillColor: 'yellow',
+            fillOpacity: 0.1,
+          color: "red",
+          weight: 0.1
+        }
+      }
+    });
+    Moj_map.addTo(MOJ_maps);	<!-- 法務省地図レイヤに入れる -->
+
+
+
+    GSI_maps.addTo(map);	<!-- 地理院タイルレイヤをマップに追加 -->
+    MOJ_maps.addTo(map);	<!-- 法務省地図レイヤをマップに追加 -->
+
+
+
+
+   <!-- レイヤコントロール -->
+    var Overlays = {
+	"地理院タイル": GSI_maps,
+	"法務省地図": MOJ_maps
+	};
+
+    var LayerControl_01 = L.control.layers(null, Overlays);
+
+    LayerControl_01.addTo(map);
+
+
+
+
+
+   <!-- オフィス白土 -->
+    var Office = L.marker([37.05090, 140.88350]);
+	Office.addTo(officeLayer);
+	Office.bindPopup('<b><a href="http://www.shirado.jp" target="_blank">オフィス白土</a></b>');
+
+   <!-- いわき市 -->
+    var iwaki_city = L.marker([37.05046, 140.88767]);
+	iwaki_city.addTo(adminLayer);
+	iwaki_city.bindPopup('<center><b><a href="http://www.sonicweb-asp.jp/g-iwaki/" target="_blank">いわき市<br>（ⅰマップ）</a></b></center>');
+
+   <!-- 法務局 -->
+    var fukushima_moj = L.marker([37.05150, 140.88900]);
+	fukushima_moj.addTo(adminLayer);
+	fukushima_moj.bindPopup('<center><b><a href="http://houmukyoku.moj.go.jp/fukushima/" target="_blank">福島地方法務局<br>いわき支局</a></b></center>');
+
+   <!-- マップ追加【レイヤグループ】 -->
+    officeLayer.addTo(map);
+    adminLayer.addTo(map);
+
+   <!-- タイトル（左上） -->
+    var title = L.control({
+	position : 'topleft'
+    });
+
+    title.onAdd = function (map) {
+	this._div = L.DomUtil.create('div', 'title');
+	this.update();
+	return this._div;
+    };
+
+    title.update = function () {
+	this._div.innerHTML =	"法務省地図 on Leaflet<br><b>今ここ何番地？</b><small>(Ver1.05)</small>" +"<br>"+
+			        "<a href='https://github.com/office-shirado/Moj_Maps' target='_blank'><small>Office Shirado（GitHub)</small></a>";
+    };
+
+    title.addTo(map);
+
+    <!--位置取得ボタン追加 -->
+    button_Locate.addTo(map);
+
+
+   <!-- 情報欄（左下） -->
+    var info01 = L.control({
+	position : 'bottomleft'
+    });
+
+    info01.onAdd = function (map) {
+	this._div = L.DomUtil.create('div', 'info');
+	this.update();
+	return this._div;
+    };
+
+    info01.update = function (zoomLev,centerLatLng) {
+	zoomLev = map.getZoom();
+	centerLatLng = map.getCenter();
+	this._div.innerHTML =	"<b>ZL:" + zoomLev + "</b><small>(N: " + Math.round(centerLatLng.lat * 100000)/100000 + "  " + "E:" + Math.round(centerLatLng.lng * 100000)/100000 + ")</small><br>" +
+				"<a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a><br>" +
+"<small>(Supecial Thanks:MOJ,GSI,AMX)</small>"
+;
+    };
+
+    info01.addTo(map);
+
+
+
+
+   <!-- イベント【ズームエンド】 -->
+    map.on("zoomend", function(zoomLev,centerLatLng){
+	info01.update(zoomLev);
+	info01.update(centerLatLng);
+        });
+
+
+   <!-- イベント【ムーブエンド】 -->
+    map.on("moveend", function(zoomLev,centerLatLng){
+	info01.update(zoomLev);
+	info01.update(centerLatLng);
+
+	   <!-- 行政機関表示・非表示 -->
+	if (map.getZoom() <13){
+        map.removeLayer(adminLayer);
+        } else {
+        map.addLayer(adminLayer);
+        }
+        });
+
+   <!-- イベント【クリック地点の属性表示】 -->
+    Moj_map.on("click", function (e) {
+            const { lat, lng } = e.latlng;
+            var selectPoint = L.popup([lat, lng]);
+
+	    var chizumei = e.layer.properties.地図名;
+	    var city = e.layer.properties.市区町村名;
+	    var oaza = e.layer.properties.大字名;
+	    var tyome = e.layer.properties.丁目名;
+	    var koaza = e.layer.properties.小字名;
+	    var chiban = e.layer.properties.地番;
+	    var zahyokei = e.layer.properties.座標系;
+	    var zahyochisyubetu = e.layer.properties.座標値種別;
+	    var sokuchikeihanbetu = e.layer.properties.測地系判別;
+	    var shukusyakubunbo = e.layer.properties.縮尺分母;
+	    var seidokubun = e.layer.properties.精度区分;
+
+	   if( oaza === undefined ) { oaza= "" };
+	   if( tyome === undefined ) { tyome = "" };
+	   if( koaza === undefined ) { koaza = "" };
+
+	   if( zahyochisyubetu === undefined ) { zahyochisyubetu = "-" };
+	   if( sokuchikeihanbetu === undefined ) { sokuchikeihanbetu = "-" };
+	   if( shukusyakubunbo === undefined ) { shukusyakubunbo = "-" };
+	   if( seidokubun === undefined ) { seidokubun = "-" };
+
+            selectPoint.setContent(
+			'<b>' + '<big>' +city + oaza+ tyome+ koaza + " " + chiban + '</big>' + '</b>' + '<br>' +
+			"地番区域：" +  city + oaza+ tyome+ koaza + '<br>' +
+			"地　番：" + chiban + '<br>' +
+			"地 図 名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
+			"座標系：" + zahyokei + "（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】" + '<br>' +
+			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）"
+			);
+ 	    selectPoint.addTo(map);
+          });
+
+  </script>
+</body>
+
+</html>
