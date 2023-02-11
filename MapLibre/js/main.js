@@ -9,14 +9,11 @@ function getLocation(getLatLng) {
 };
 
 
-
-
-
-
 var map = new maplibregl.Map({
     container: 'map',
     style: {
-        center: [140.8835,37.0509], // 中心座標
+//        center: [140.8835,37.0509], // 中心座標
+        center: [140.000,37.000], // 中心座標
         zoom: 16, // ズームレベル
         minZoom: 4,
         maxZoom: 23,
