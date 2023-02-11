@@ -120,7 +120,7 @@ map.addControl(new maplibregl.GeolocateControl({
     trackUserLocation: false,
     showUserLocation: false
     }), 
-    'top-left'
+    'top-right'
 );
 
 
