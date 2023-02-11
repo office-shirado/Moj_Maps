@@ -8,7 +8,7 @@ var map = new maplibregl.Map({
         version: 8,
 
 	sources: {
-            rtile: {
+            GSI_seamlessphoto: {
                 type: 'raster',
                 tiles: [
                     'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg',
@@ -16,7 +16,7 @@ var map = new maplibregl.Map({
                 tileSize: 256,
                 attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
             },
-            plateau: {
+            MOJ_Map: {
                 type: 'vector',
                 tiles: ['https://x.optgeo.org/a/{z}/{x}/{y}.mvt'],
                 minzoom: 14,
@@ -28,9 +28,9 @@ var map = new maplibregl.Map({
 
             layers: [
                 {
-                  id: 'seamlessphoto',
+                  id: 'GSI_seamlessphoto',
                   type: 'raster',
-                  source: 'rtile',
+                  source: 'GSI_seamlessphoto',
                   minzoom: 0,
                   maxzoom: 23,
                 },
@@ -38,10 +38,8 @@ var map = new maplibregl.Map({
                 {
                   id: 'fude-fill',
                   type: 'fill',
-                  source: 'plateau',
+                  source: 'MOJ_Map',
                   'source-layer': 'fude',
-                  minzoom: 14,
-                  maxzoom: 23,
                   'paint': {
                     "fill-color": "#ffff00",
                     "fill-opacity": 0.2
@@ -52,10 +50,8 @@ var map = new maplibregl.Map({
                 {
                   id: 'fude-line',
                   type: 'line',
-                  source: 'plateau',
+                  source: 'MOJ_Map',
                   'source-layer': 'fude',
-                  minzoom: 14,
-                  maxzoom: 23,
                   'paint': {
                     "line-color": "#ff0000",
                   },
