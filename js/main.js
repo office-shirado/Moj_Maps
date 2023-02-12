@@ -44,7 +44,7 @@ var map = new maplibregl.Map({
             MOJ_Map: {
                 type: 'vector',
                 tiles: ['https://x.optgeo.org/a/{z}/{x}/{y}.mvt'],
-                minzoom: 14,
+                minzoom: 5,
                 maxzoom: 16,
                 attribution:"<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
 			},
@@ -84,7 +84,7 @@ var map = new maplibregl.Map({
 
                 // レイヤ設定（法務省地図）【ポリゴン】
                 {
-                  id: 'fude-fill',
+                  id: 'MOJ_fude-fill',
                   type: 'fill',
                   source: 'MOJ_Map',
                   'source-layer': 'fude',
@@ -92,11 +92,14 @@ var map = new maplibregl.Map({
                     "fill-color": "#ffff00",
                     "fill-opacity": 0.2
                   },
+                  minzoom: 0,
+                  maxzoom: 15,
+
                 },
 
                 // レイヤ設定（法務省地図）【ライン】
                 {
-                  id: 'fude-line',
+                  id: 'MOJ_fude-line',
                   type: 'line',
                   source: 'MOJ_Map',
                   'source-layer': 'fude',
@@ -104,6 +107,24 @@ var map = new maplibregl.Map({
                     "line-color": "#ff0000",
                   },
                 },
+
+                // レイヤ設定（法務省地図）【代表点】
+//                {
+//                  id: 'MOJ_daihyo',
+//                  type: 'circle',
+//                  source: 'MOJ_Map',
+//                  'source-layer': 'daihyo',
+//                  'paint': {
+//                    'circle-radius': 10,  //半径
+//                    'circle-color': 'rgba(128,255,128,1)',
+//                    'circle-opacity': 0.2
+//                  },
+//                  minzoom: 0,
+//                  maxzoom: 15,
+//                },
+
+
+
             ]
     },
 });
@@ -149,7 +170,7 @@ map.addControl(new maplibregl.GeolocateControl({
 
 
 
-map.on('click', 'fude-fill', (e) => {
+map.on('click', 'MOJ_fude-fill', (e) => {
     var chizumei = e.features[0].properties['地図名'];
     var city = e.features[0].properties['市区町村名'];
     var oaza = e.features[0].properties['大字名'];
