@@ -181,8 +181,8 @@ map.on('click', 'MOJ_fude-fill', (e) => {
    if( shukusyakubunbo === undefined ) { shukusyakubunbo = "-" };
    if( seidokubun === undefined ) { seidokubun = "-" };
 
-
-
+   var Google_LngLat = e.lngLat;
+Google_LngLat.toArray;
 
     new maplibregl.Popup()
         .setLngLat(e.lngLat)
@@ -192,9 +192,16 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 			"地　番：" + chiban + '<br>' +
 			"地図名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
 			"座標系：" + zahyokei + "<small>（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】</small>" + '<br>' +
-			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）"
+			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）" + '<br>' +
+			"【<a href='https://www.google.co.jp/search?q=" + city + oaza+ tyome+ koaza +  chiban + "' target='_blank'>Google検索</a>】" +
+			"【<a href='https://www.google.co.jp/maps?q=" + e.lngLat.lat + "," + e.lngLat.lng + "&hl=ja' target='_blank'>GoogleMap</a>】"
 	).addTo(map);
 });
+
+
+
+
+
 
 //ズームペイント透過度
 map.on('zoom', function() {
