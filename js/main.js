@@ -91,10 +91,7 @@ var map = new maplibregl.Map({
                   'paint': {
                     "fill-color": "#ffff00",
                     "fill-opacity": 0.2
-                  },
-                  minzoom: 0,
-                  maxzoom: 15,
-
+                  }
                 },
 
                 // レイヤ設定（法務省地図）【ライン】
