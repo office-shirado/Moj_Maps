@@ -166,7 +166,7 @@ map.addControl(new maplibregl.GeolocateControl({
 
 
 
-
+//クリック属性表示
 map.on('click', 'MOJ_fude-fill', (e) => {
     var chizumei = e.features[0].properties['地図名'];
     var city = e.features[0].properties['市区町村名'];
@@ -202,11 +202,19 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 			"地図名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
 			"座標系：" + zahyokei + "<small>（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】</small>" + '<br>' +
 			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）"
-)
-        .addTo(map);
-    });
+	).addTo(map);
+});
 
-
-
+//ズームペイント透過度
+map.on('zoomend', function() {
+	var zoomlv = map.getZoom();
+	if( zoomlv > 18) {
+			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
+			}
+			else
+			{
+			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
+			};
+});
 
 
