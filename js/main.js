@@ -106,22 +106,7 @@ var map = new maplibregl.Map({
                   'paint': {
                     "line-color": "#ff0000",
                   },
-                },
-
-                // レイヤ設定（法務省地図）【代表点】
-//                {
-//                  id: 'MOJ_daihyo',
-//                  type: 'circle',
-//                  source: 'MOJ_Map',
-//                  'source-layer': 'daihyo',
-//                  'paint': {
-//                    'circle-radius': 10,  //半径
-//                    'circle-color': 'rgba(128,255,128,1)',
-//                    'circle-opacity': 0.2
-//                  },
-//                  minzoom: 0,
-//                  maxzoom: 15,
-//                },
+                }
 
 
 
