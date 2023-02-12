@@ -144,7 +144,7 @@ map.doubleClickZoom.disable();
 map.dragRotate.disable();
 
 //ピッチ回転制御（しない）
-map..pitchWithRotate.disable();
+map.pitchWithRotate.disable();
 
 //タッチズーム回転制御（しない）
 map.touchZoomRotate.disableRotation();
@@ -226,5 +226,3 @@ map.on('zoom', function() {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
 			};
 });
-
-
