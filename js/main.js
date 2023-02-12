@@ -206,8 +206,15 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 });
 
 //ズームペイント透過度
-map.on('zoomend', function() {
+map.on('zoom', function() {
 	var zoomlv = map.getZoom();
+	if( zoomlv > 16) {
+			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 1.0);
+			}
+			else
+			{
+			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 0.1);
+			};
 	if( zoomlv > 17) {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
 			}
