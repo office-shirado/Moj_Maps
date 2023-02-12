@@ -208,7 +208,7 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 //ズームペイント透過度
 map.on('zoomend', function() {
 	var zoomlv = map.getZoom();
-	if( zoomlv > 18) {
+	if( zoomlv > 17) {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
 			}
 			else
