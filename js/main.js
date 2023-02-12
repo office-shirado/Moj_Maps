@@ -143,6 +143,9 @@ map.doubleClickZoom.disable();
 //ドラッグ回転制御（しない）
 map.dragRotate.disable();
 
+//ピッチ回転制御（しない）
+map..pitchWithRotate.disable();
+
 //タッチズーム回転制御（しない）
 map.touchZoomRotate.disableRotation();
 
