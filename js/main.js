@@ -63,23 +63,11 @@ var map = new maplibregl.Map({
 
                 // レイヤ設定（淡色地図01）
                 {
-                  id: 'GSI_pale01',
+                  id: 'GSI_pale',
                   type: 'raster',
                   source: 'GSI_pale',
                   minzoom: 0,
-                  maxzoom: 15,
-                },
-
-                // レイヤ設定（淡色地図02）
-                {
-                  id: 'GSI_pale02',
-                  type: 'raster',
-                  source: 'GSI_pale',
-                  minzoom: 15,
                   maxzoom: 18,
-                  'paint': {
-                    "raster-opacity": 0.4,
-                  },
                 },
 
                 // レイヤ設定（法務省地図）【ポリゴン】
@@ -144,7 +132,7 @@ map.doubleClickZoom.disable();
 map.dragRotate.disable();
 
 //ピッチ回転制御（しない）
-map.pitchWithRotate.disable();
+//map.pitchWithRotate.disable();
 
 //タッチズーム回転制御（しない）
 map.touchZoomRotate.disableRotation();
@@ -213,11 +201,14 @@ map.on('zoom', function() {
 	var zoomlv = map.getZoom();
 	if( zoomlv > 16) {
 			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 1.0);
+			map.setPaintProperty('GSI_pale', 'raster-opacity', 0.4);
 			}
 			else
 			{
 			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 0.1);
+			map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
 			};
+
 	if( zoomlv > 17) {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
 			}
@@ -226,3 +217,5 @@ map.on('zoom', function() {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
 			};
 });
+
+
