@@ -101,14 +101,12 @@ var map = new maplibregl.Map({
 //                  'source-layer': 'daihyo',
 //                  'paint': {
 //                    'circle-radius': 10,  //半径
-//                    'circle-color': 'rgba(128,255,128,1)',
-//                    'circle-opacity': 0.2
+//                    'circle-color': 'rgba(128,255,128,0.1)',
+//                    'circle-opacity': 0.1
 //                  },
 //                  minzoom: 0,
 //                  maxzoom: 15,
 //                },
-
-
 
             ]
     },
