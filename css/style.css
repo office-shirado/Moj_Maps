@@ -12,7 +12,7 @@ body {
 
 #info01 {
 	padding: 6px 8px;
-	font: 12px/14px Arial, Helvetica, sans-serif;
+	font: 10px/12px Arial, Helvetica, sans-serif;
 	color: navy;
 	background: white;
 	background: rgba(255,255,255,0.8);
@@ -33,7 +33,7 @@ body {
 
 #info02 {
 	padding: 3px 4px;
-	font: 14px/16px Arial, Helvetica, sans-serif;
+	font: 12px/14px Arial, Helvetica, sans-serif;
 	color: black;
 	background: white;
 	background: rgba(255,255,255,0.8);
@@ -44,20 +44,6 @@ body {
 	bottom: 0; 
         }
 
-
-#SelectMap {
-	padding: 3px 4px;
-	font: 10px/12px Arial, Helvetica, sans-serif;
-	color: black;
-	background: white;
-	background: rgba(255,255,255,0.8);
-	box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	border-radius: 5px;
-        width: fit-content;
-	position: relative;
-	bottom: 0; 
-	z-index: 5;
-        }
 
 
 .mapboxgl-popup .mapboxgl-popup-content {
