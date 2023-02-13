@@ -19,7 +19,7 @@ body {
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
 	border-radius: 5px;
         width: fit-content;
-	position: absolute;
+	position: relative;
         }
 
 #info02 {
@@ -34,6 +34,21 @@ body {
 	position: absolute;
 	bottom: 0; 
         }
+
+
+#SelectMap {
+	padding: 3px 4px;
+	font: 10px/12px Arial, Helvetica, sans-serif;
+	color: black;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+        width: fit-content;
+	position: relative;
+	bottom: 0; 
+        }
+
 
 .mapboxgl-popup .mapboxgl-popup-content {
 	padding: 8px 10px;
