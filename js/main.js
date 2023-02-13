@@ -102,6 +102,31 @@ function SelectMap(){
 			};
 };
 
+function SelectView(){
+	var Moj_daihyoten = document.getElementById('daihyoten').value;
+	if( Moj_daihyoten =="visible")
+			 {
+		        map.addLayer({
+                		  'id': 'MOJ_daihyo',
+		                  'type': 'circle',
+		                  'source': 'MOJ_Map',
+		                  'source-layer': 'daihyo',
+		                  'paint': {
+		                    'circle-radius': 20,  //半径
+		                    'circle-color': 'rgba(128,255,128,0.1)',
+		                    'circle-opacity': 0.1
+		                  },
+		                  'minzoom': 0,
+		                  'maxzoom': 15,
+				});
+			}
+			else
+			{
+				if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
+			};
+
+};
+
 
 var map = new maplibregl.Map({
     container: 'map',
@@ -247,21 +272,6 @@ var map = new maplibregl.Map({
                     "line-color": "#ff0000",
                   },
                 },
-
-                // レイヤ設定（法務省地図）【代表点】
-//                {
-//                  id: 'MOJ_daihyo',
-//                  type: 'circle',
-//                  source: 'MOJ_Map',
-//                  'source-layer': 'daihyo',
-//                  'paint': {
-//                    'circle-radius': 10,  //半径
-//                    'circle-color': 'rgba(128,255,128,1)',
-//                    'circle-opacity': 0.2
-//                  },
-//                  minzoom: 0,
-//                  maxzoom: 15,
-//                },
 
 
 
