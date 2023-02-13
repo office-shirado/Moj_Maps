@@ -8,6 +8,100 @@ function getLocation(getLatLng) {
     });
 };
 
+function SelectMap(){
+
+	var BaseMapName = document.getElementById('basemaps').value;
+	var zoomlv = map.getZoom()
+
+	if (map.getLayer('GSI_pale')) map.removeLayer('GSI_pale');
+	if (map.getLayer('GSI_seamlessphoto')) map.removeLayer('GSI_seamlessphoto');
+	if (map.getLayer('GSI_ort_USA10')) map.removeLayer('GSI_ort_USA10');
+	if (map.getLayer('GSI_ort_old10')) map.removeLayer('GSI_ort_old10');
+	if (map.getLayer('GSI_gazo1')) map.removeLayer('GSI_gazo1');
+	if (map.getLayer('GSI_gazo2')) map.removeLayer('GSI_gazo2');
+	if (map.getLayer('GSI_gazo3')) map.removeLayer('GSI_gazo3');
+	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
+
+	map.removeLayer('MOJ_fude-fill');
+	map.removeLayer('MOJ_fude-line');
+
+
+ 	// 空中写真切替え 
+	if( BaseMapName =="GSI_pale-seamlessphoto") 
+	{
+		map.addLayer({
+	          'id': 'GSI_seamlessphoto',
+	          'type': 'raster',
+	          'source': 'GSI_seamlessphoto',
+	          'minzoom': 15,
+	          'maxzoom': 23,
+        	    }),
+		map.addLayer({
+	          'id': 'GSI_pale',
+	          'type': 'raster',
+	          'source': 'GSI_pale',
+	          'minzoom': 0,
+	          'maxzoom': 18,
+        	    });
+		if( zoomlv > 16) {
+				map.setPaintProperty('GSI_pale', 'raster-opacity', 0.4);
+				}
+			else
+				{
+				map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
+				};
+	}
+	else
+	{
+		map.addLayer({
+	          'id': BaseMapName,
+	          'type': 'raster',
+	          'source': BaseMapName,
+	          'minzoom': 14,
+	          'maxzoom': 23,
+        	    });
+	};
+
+	var zoomlv = map.getZoom();
+
+	//法務省地図【ポリゴン】
+        map.addLayer({
+                  'id': 'MOJ_fude-fill',
+                  'type': 'fill',
+                  'source': 'MOJ_Map',
+                  'source-layer': 'fude',
+                  'paint': {
+                    "fill-color": "#ffff00",
+                    "fill-opacity": 0.2
+                  }
+	});
+	if( zoomlv > 17) {
+			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
+			}
+			else
+			{
+			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
+			};
+
+	//法務省地図【ライン】
+        map.addLayer({
+                  'id': 'MOJ_fude-line',
+                  'type': 'line',
+                  'source': 'MOJ_Map',
+                  'source-layer': 'fude',
+                  'paint': {
+                    "line-color": "#ff0000",
+                  },
+	});
+	if( zoomlv > 16) {
+			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 1.0);
+			}
+			else
+			{
+			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 0.1);
+			};
+};
+
 
 var map = new maplibregl.Map({
     container: 'map',
@@ -40,6 +134,67 @@ var map = new maplibregl.Map({
                 attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
             },
 
+            // 空中写真（1945年～1950年）
+            GSI_ort_USA10: {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/ort_USA10/{z}/{x}/{y}.png',
+                ],
+                tileSize: 256,
+                attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+            },
+
+            // 空中写真（1945年～1950年）
+            GSI_ort_old10: {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/ort_old10/{z}/{x}/{y}.png',
+                ],
+                tileSize: 256,
+                attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+            },
+
+
+            // 空中写真（1974年～1978年）  
+            GSI_gazo1: {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/gazo1/{z}/{x}/{y}.jpg',
+                ],
+                tileSize: 256,
+                attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+            },
+
+            // 空中写真（1979年～1983年）  
+            GSI_gazo2: {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/gazo2/{z}/{x}/{y}.jpg',
+                ],
+                tileSize: 256,
+                attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+            },
+
+            // 空中写真（1974年～1978年）  
+            GSI_gazo3: {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/gazo3/{z}/{x}/{y}.jpg',
+                ],
+                tileSize: 256,
+                attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+            },
+
+            // 空中写真（1979年～1983年）  
+            GSI_gazo4: {
+                type: 'raster',
+                tiles: [
+                    'https://cyberjapandata.gsi.go.jp/xyz/gazo4/{z}/{x}/{y}.jpg',
+                ],
+                tileSize: 256,
+                attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
+            },
+
             // 法務省地図
             MOJ_Map: {
                 type: 'vector',
@@ -61,7 +216,7 @@ var map = new maplibregl.Map({
                   maxzoom: 23,
                 },
 
-                // レイヤ設定（淡色地図01）
+                // レイヤ設定（淡色地図）
                 {
                   id: 'GSI_pale',
                   type: 'raster',
