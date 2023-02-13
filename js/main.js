@@ -25,6 +25,7 @@ function SelectMap(){
 	map.removeLayer('MOJ_fude-fill');
 	map.removeLayer('MOJ_fude-line');
 
+	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
 
  	// 空中写真切替え 
 	if( BaseMapName =="GSI_pale-seamlessphoto") 
@@ -100,6 +101,31 @@ function SelectMap(){
 			{
 			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 0.1);
 			};
+
+	//法務省地図【代表点】
+	var Moj_daihyoten = document.getElementById('daihyoten').value;
+	if( Moj_daihyoten =="visible")
+			 {
+		        map.addLayer({
+                		  'id': 'MOJ_daihyo',
+		                  'type': 'circle',
+		                  'source': 'MOJ_Map',
+		                  'source-layer': 'daihyo',
+		                  'paint': {
+		                    'circle-radius': 20,  //半径
+		                    'circle-color': 'rgba(128,255,128,0.1)',
+		                    'circle-opacity': 0.1
+		                  },
+		                  'minzoom': 0,
+		                  'maxzoom': 15,
+				});
+			}
+			else
+			{
+				if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
+			};
+
+
 };
 
 function SelectView(){
