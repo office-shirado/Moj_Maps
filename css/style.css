@@ -20,6 +20,7 @@ body {
 	border-radius: 5px;
         width: fit-content;
 	position: relative;
+	z-index: 10;
         }
 
 #info02 {
@@ -47,6 +48,7 @@ body {
         width: fit-content;
 	position: relative;
 	bottom: 0; 
+	z-index: 5;
         }
 
 
