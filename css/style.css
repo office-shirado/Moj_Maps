@@ -22,6 +22,14 @@ body {
 	position: relative;
 	z-index: 10;
         }
+#basemaps {
+	font: 12px/14px Arial, Helvetica, sans-serif;
+        }
+
+#daihyoten {
+	font: 12px/14px Arial, Helvetica, sans-serif;
+        }
+
 
 #info02 {
 	padding: 3px 4px;
