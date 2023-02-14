@@ -1,0 +1,82 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+#map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 0;
+}
+
+
+#info01 {
+	padding: 6px 8px;
+	font: 10px/12px Arial, Helvetica, sans-serif;
+	color: navy;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+        width: fit-content;
+	position: relative;
+	z-index: 10;
+        }
+#basemaps {
+	font: 12px/14px Arial, Helvetica, sans-serif;
+        }
+
+#daihyoten {
+	font: 12px/14px Arial, Helvetica, sans-serif;
+        }
+
+
+#info02 {
+	padding: 3px 4px;
+	font: 12px/14px Arial, Helvetica, sans-serif;
+	color: black;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+        width: fit-content;
+	position: absolute;
+	bottom: 0; 
+	z-index: 10;
+        }
+
+#Geocoder
+{
+	padding: 3px 4px;
+	font: 8px/10px Arial, Helvetica, sans-serif;
+	color: black;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+        width: fit-content;
+	position: fixed;
+	z-index: 10;
+        }
+
+#address {
+	font: 12px/14px Arial, Helvetica, sans-serif;
+        }
+
+#exec {
+	font: 11px/12px Arial, Helvetica, sans-serif;
+	padding-top: 0.0em;
+	padding-bottom: 0.0em;
+      }
+
+.mapboxgl-popup .mapboxgl-popup-content {
+	padding: 8px 10px;
+	font: 12px/14px Arial, Helvetica, sans-serif;
+	color: black;
+	background: white;
+	background: rgba(255,255,255,0.9);
+	box-shadow: 0 0 15px rgba(0,0,0,0.4);
+	border-radius: 5px;
+        width: fit-content;
+}
