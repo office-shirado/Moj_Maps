@@ -58,8 +58,8 @@ body {
 	font-family: "Open Sans", "Helvetica Neue", Arial, Helvetica, sans-serif;
 	position: relative;
 	background-color: #fff;
-	width: 100%;
-	min-width: 120px;
+	width: 80%;
+	min-width: 100px;
 	z-index: 1;
 	border-radius: 5px;
 	transition: width 0.25s, min-width 0.25s;
