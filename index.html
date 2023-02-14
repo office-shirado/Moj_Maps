@@ -9,17 +9,32 @@
     <!-- MapLibre -->
     <script src='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js'></script>
     <link href='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css' rel='stylesheet' />
+
+    <!-- ジオコーダー（OpenStreetmap） -->
+    <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.css" type="text/css" />
+
+
+
 </head>
 <body>
+
+
     <div id="map"></div>
     <script src="js/main.js"></script>
+
+
+
+
     <div id="info01">
       <center>
-      <b><big>今ここ何番地？</big></b><small>(Ver2.05)</small><br>
+      <b><big>今ここ何番地？</big></b><small>(Ver2.06)</small><br>
       <small>法務省地図 on MapLibre</small><br>
       <a href="https://github.com/office-shirado/Moj_Maps" target="_blank"><small>Office Shirado（GitHub)</small></a>
       </center>
     </div>
+
+
     <div id="info02">
       <select id ="basemaps" onchange="SelectMap()">
         <option value="GSI_pale-seamlessphoto">【全国】淡色地図・空中写真</option>
