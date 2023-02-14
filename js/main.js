@@ -154,10 +154,12 @@ function SelectView(){
 };
 
 
+
+
+// マップ設定
 var map = new maplibregl.Map({
     container: 'map',
     style: {
-//        center: [140.8835,37.0509], // 中心座標（白土）
         center: [139.75417,36.50], // 日本全体
         zoom: 4, // ズームレベル
         minZoom: 5,
@@ -305,9 +307,48 @@ var map = new maplibregl.Map({
     },
 });
 
+//ジオコーダー（OpenStreetMap）
+var geocoder_api = {
+	forwardGeocode: async (config) => {
+		const features = [];
+		try {
+		  let request ='https://nominatim.openstreetmap.org/search?q=' +config.query +'&format=geojson&polygon_geojson=1&addressdetails=1';
+			const response = await fetch(request);
+			const geojson = await response.json();
+		for (let feature of geojson.features) {
+			let center = [
+				feature.bbox[0] +
+				(feature.bbox[2] - feature.bbox[0]) / 2,
+				feature.bbox[1] +
+				(feature.bbox[3] - feature.bbox[1]) / 2
+			];
+		let point = {
+		type: 'Feature',
+			geometry: {
+				type: 'Point',
+				coordinates: center
+			},
+			place_name: feature.properties.display_name,
+			properties: feature.properties,
+			text: feature.properties.display_name,
+		place_type: ['place'],
+		center: center
+		};
+	features.push(point);
+	}
+	} catch (e) {
+	console.error(`Failed to forwardGeocode with error: ${e}`);
+	}
+
+	return {
+		features: features
+	};
+	}
+};
+map.addControl(new MaplibreGeocoder(geocoder_api, {maplibregl: maplibregl}));
 
 
-// 複数年代の空中写真読込みしたい。【未実装】
+// ロードアクション
 map.on('load', function () {
     // ロード時のアクション（現在地取得）
     navigator.geolocation.getCurrentPosition(getLocation)
@@ -373,7 +414,7 @@ map.on('click', 'MOJ_fude-fill', (e) => {
    if( seidokubun === undefined ) { seidokubun = "-" };
 
    var Google_LngLat = e.lngLat;
-Google_LngLat.toArray;
+       Google_LngLat.toArray;
 
     new maplibregl.Popup()
         .setLngLat(e.lngLat)
@@ -390,8 +431,21 @@ Google_LngLat.toArray;
 });
 
 
+//マウスオーバーイベント
+map.on('mouseover','MOJ_fude-fill', function() {
+
+	//マウスオーバーイベント
+
+});
 
 
+
+//マウスアウトイベント
+map.on('mouseleave','MOJ_fude-fill', function() {
+
+	//マウスアウトイベント
+
+});
 
 
 //ズームペイント透過度
