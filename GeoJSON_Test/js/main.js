@@ -27,8 +27,11 @@ function SelectMap(){
 
 	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
 
-	map.removeLayer('Edited_MojMap_Fill');
-	map.removeLayer('Edited_MojMap_Line');
+	map.removeLayer('Edited_MojMap_Fill_01');
+	map.removeLayer('Edited_MojMap_Line_01');
+
+	map.removeLayer('Edited_MojMap_Fill_02');
+	map.removeLayer('Edited_MojMap_Line_02');
 
 
  	// 空中写真切替え 
@@ -129,11 +132,10 @@ function SelectMap(){
 				if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
 			};
 
-
 	map.addLayer({
-		id: 'Edited_MojMap_Fill',
+		id: 'Edited_MojMap_Fill_01',
 		type: 'fill',
-		source: 'Edited_MojMap',
+		source: 'Edited_MojMap_01',
 		layout: {
 		},
                   'paint': {
@@ -141,13 +143,13 @@ function SelectMap(){
                     "fill-opacity": 0.2
                   },
                 minzoom: 13,
-                maxzoom: 18,
+                maxzoom: 16,
 	});
 
 	map.addLayer({
-		id: 'Edited_MojMap_Line',
+		id: 'Edited_MojMap_Line_01',
 		type: 'line',
-		source: 'Edited_MojMap',
+		source: 'Edited_MojMap_01',
 		layout: {
 		},
 		paint: {
@@ -158,6 +160,34 @@ function SelectMap(){
                 maxzoom: 23,
 	});
 
+
+	map.addLayer({
+		id: 'Edited_MojMap_Fill_02',
+		type: 'fill',
+		source: 'Edited_MojMap_02',
+		layout: {
+		},
+                  'paint': {
+                    "fill-color": "#0000ff",
+                    "fill-opacity": 0.2
+                  },
+                minzoom: 13,
+                maxzoom: 16,
+	});
+
+	map.addLayer({
+		id: 'Edited_MojMap_Line_02',
+		type: 'line',
+		source: 'Edited_MojMap_02',
+		layout: {
+		},
+		paint: {
+		'line-color': '#0000ff',
+		'line-width': 1
+		},
+                minzoom: 13,
+                maxzoom: 23,
+	});
 
 
 
@@ -391,16 +421,21 @@ map.on('load', function () {
 	navigator.geolocation.getCurrentPosition(getLocation);
 
 
-	map.addSource('Edited_MojMap', {
+	map.addSource('Edited_MojMap_01', {
 		type : 'geojson',
 		data : './GeoJSON/Edited_MojMap/12227-0443-3.geojson'
 	});
 
+	map.addSource('Edited_MojMap_02', {
+		type : 'geojson',
+		data : './GeoJSON/Edited_MojMap/13105-0100-18.geojson'
+	});
+
 
 	map.addLayer({
-		id: 'Edited_MojMap_Fill',
+		id: 'Edited_MojMap_Fill_01',
 		type: 'fill',
-		source: 'Edited_MojMap',
+		source: 'Edited_MojMap_01',
 		layout: {
 		},
                   'paint': {
@@ -408,13 +443,13 @@ map.on('load', function () {
                     "fill-opacity": 0.2
                   },
                 minzoom: 13,
-                maxzoom: 18,
+                maxzoom: 16,
 	});
 
 	map.addLayer({
-		id: 'Edited_MojMap_Line',
+		id: 'Edited_MojMap_Line_01',
 		type: 'line',
-		source: 'Edited_MojMap',
+		source: 'Edited_MojMap_01',
 		layout: {
 		},
 		paint: {
@@ -424,6 +459,36 @@ map.on('load', function () {
                 minzoom: 13,
                 maxzoom: 23,
 	});
+
+
+	map.addLayer({
+		id: 'Edited_MojMap_Fill_02',
+		type: 'fill',
+		source: 'Edited_MojMap_02',
+		layout: {
+		},
+                  'paint': {
+                    "fill-color": "#0000ff",
+                    "fill-opacity": 0.2
+                  },
+                minzoom: 13,
+                maxzoom: 16,
+	});
+
+	map.addLayer({
+		id: 'Edited_MojMap_Line_02',
+		type: 'line',
+		source: 'Edited_MojMap_02',
+		layout: {
+		},
+		paint: {
+		'line-color': '#0000ff',
+		'line-width': 1
+		},
+                minzoom: 13,
+                maxzoom: 23,
+	});
+
 
 
 
