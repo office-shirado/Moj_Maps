@@ -360,18 +360,34 @@ map.on('load', function () {
 
 
 	map.addLayer({
-		id: 'Edited_MojMap',
+		id: 'Edited_MojMap_Fill',
+		type: 'fill',
+		source: 'Edited_MojMap',
+		layout: {
+		},
+                  'paint': {
+                    "fill-color": "#0000ff",
+                    "fill-opacity": 0.2
+                  },
+                minzoom: 13,
+                maxzoom: 18,
+	});
+
+	map.addLayer({
+		id: 'Edited_MojMap_Line',
 		type: 'line',
 		source: 'Edited_MojMap',
 		layout: {
 		},
 		paint: {
-		'line-color': '#0000FF',
+		'line-color': '#0000ff',
 		'line-width': 1
 		},
-                  minzoom: 13,
-                  maxzoom: 23,
+                minzoom: 13,
+                maxzoom: 23,
 	});
+
+
 
 
 
