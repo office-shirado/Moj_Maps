@@ -481,7 +481,7 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 
 map.addSource('route', {
 	type : 'geojson',
-	data : './ne_50m_urban_areas.geojson'
+	data : './GeoJSON/Edited_MojMap/12227-0443-3.geojson'
 });
 
 
