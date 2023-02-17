@@ -353,24 +353,24 @@ map.on('load', function () {
 	navigator.geolocation.getCurrentPosition(getLocation);
 
 
-	map.addSource('route', {
+	map.addSource('Edited_MojMap', {
 		type : 'geojson',
 		data : './GeoJSON/Edited_MojMap/12227-0443-3.geojson'
 	});
 
 
 	map.addLayer({
-		id: 'route',
+		id: 'Edited_MojMap',
 		type: 'line',
-		source: 'route',
+		source: 'Edited_MojMap',
 		layout: {
-		'line-join': 'round',
-		'line-cap': 'round'
 		},
 		paint: {
-		'line-color': '#FF0000',
-		'line-width': 8
-		}
+		'line-color': '#00FF00',
+		'line-width': 1
+		},
+                  minzoom: 13,
+                  maxzoom: 23,
 	});
 
 
