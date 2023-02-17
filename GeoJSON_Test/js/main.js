@@ -366,7 +366,7 @@ map.on('load', function () {
 		layout: {
 		},
 		paint: {
-		'line-color': '#00FF00',
+		'line-color': '#0000FF',
 		'line-width': 1
 		},
                   minzoom: 13,
