@@ -347,12 +347,35 @@ map.addControl(new MaplibreGeocoder(geocoder_api, {maplibregl: maplibregl}));
     
 
 // ロードアクション
-//map.on('load', function () {
+map.on('load', function () {
+
+	// ロード時のアクション（現在地取得）
+	navigator.geolocation.getCurrentPosition(getLocation);
+
+
+	map.addSource('route', {
+		type : 'geojson',
+		data : './GeoJSON/Edited_MojMap/12227-0443-3.geojson'
+	});
+
+
+	map.addLayer({
+		id: 'route',
+		type: 'line',
+		source: 'route',
+		layout: {
+		'line-join': 'round',
+		'line-cap': 'round'
+		},
+		paint: {
+		'line-color': '#FF0000',
+		'line-width': 8
+		}
+	});
 
 
 
-
-//});
+});
 
 
 
@@ -476,28 +499,6 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 
             map.on("load", () => {
 
-    // ロード時のアクション（現在地取得）
-    navigator.geolocation.getCurrentPosition(getLocation);
-
-map.addSource('route', {
-	type : 'geojson',
-	data : './GeoJSON/Edited_MojMap/12227-0443-3.geojson'
-});
-
-
-map.addLayer({
-	id: 'route',
-	type: 'line',
-	source: 'route',
-	layout: {
-	'line-join': 'round',
-	'line-cap': 'round'
-	},
-	paint: {
-	'line-color': '#FF0000',
-	'line-width': 8
-	}
-});
 
 		//農地ポリゴン
                 map.addSource("counties", {
