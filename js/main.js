@@ -27,6 +27,8 @@ function SelectMap(){
 
 	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
 
+
+
  	// 空中写真切替え 
 	if( BaseMapName =="GSI_pale-seamlessphoto") 
 	{
@@ -126,6 +128,11 @@ function SelectMap(){
 			};
 
 
+
+
+
+
+
 };
 
 function SelectView(){
@@ -155,9 +162,9 @@ function SelectView(){
 
 
 
-
 // マップ設定
 var map = new maplibregl.Map({
+
     container: 'map',
     style: {
         center: [139.75417,36.50], // 日本全体
@@ -165,7 +172,7 @@ var map = new maplibregl.Map({
         minZoom: 5,
         maxZoom: 23,
         version: 8,
-
+	hash: true,
 	sources: {
             // シームレス空中写真
             GSI_seamlessphoto: {
@@ -258,7 +265,6 @@ var map = new maplibregl.Map({
 			},
 		},
 
-
             layers: [
                 // レイヤ設定（シームレス空中写真）
                 {
@@ -300,9 +306,6 @@ var map = new maplibregl.Map({
                     "line-color": "#ff0000",
                   },
                 },
-
-
-
             ]
     },
 });
@@ -348,11 +351,30 @@ var geocoder_api = {
 map.addControl(new MaplibreGeocoder(geocoder_api, {maplibregl: maplibregl}));
 
 
+    
+
 // ロードアクション
 map.on('load', function () {
-    // ロード時のアクション（現在地取得）
-    navigator.geolocation.getCurrentPosition(getLocation)
+
+	// ロード時のアクション（現在地取得）
+	navigator.geolocation.getCurrentPosition(getLocation);
+
+	//選択筆情報パネル表示
+//	document.getElementById("select_fude_text01").style.visibility = "visible";
+//	document.getElementById("select_fude_text02").style.visibility = "visible";
+//	document.getElementById("select_fude_text03").style.visibility = "visible";
+//	document.getElementById("select_fude_text04").style.visibility = "visible";
+//	document.getElementById("select_fude_text05").style.visibility = "visible";
+//	document.getElementById("select_fude_text06").style.visibility = "visible";
+//	document.getElementById("select_fude_text07").style.visibility = "visible";
+//	document.getElementById("select_fude_text08").style.visibility = "visible";
+
+
+
+
 });
+
+
 
 
 
@@ -389,6 +411,30 @@ map.addControl(new maplibregl.GeolocateControl({
 
 
 
+// 選択筆情報コピー
+function CopyFudeInfo(){
+  var fude_info01 = document.getElementById("select_fude_text01").value;
+  var fude_info02 = document.getElementById("select_fude_text02").value;
+  var fude_info03 = document.getElementById("select_fude_text03").value;
+  var fude_info04 = document.getElementById("select_fude_text04").value;
+  var fude_info05 = document.getElementById("select_fude_text05").value;
+  var fude_info06 = document.getElementById("select_fude_text06").value;
+  var fude_info07 = document.getElementById("select_fude_text07").value;
+
+  var select_fude_info = fude_info01 + '\n' +
+			 fude_info02 + '\n' +
+			 fude_info03 + '\n' +
+			 fude_info04 + '\n' +
+			 fude_info05 + '\n' +
+			 fude_info06 + '\n' +
+			 fude_info07 + '\n';
+
+  navigator.clipboard.writeText(select_fude_info);
+
+
+};
+
+
 //クリック属性表示
 map.on('click', 'MOJ_fude-fill', (e) => {
     var chizumei = e.features[0].properties['地図名'];
@@ -416,19 +462,35 @@ map.on('click', 'MOJ_fude-fill', (e) => {
    var Google_LngLat = e.lngLat;
        Google_LngLat.toArray;
 
+
+
     new maplibregl.Popup()
         .setLngLat(e.lngLat)
         .setHTML(
-			'<b>' + '<big>' +city + oaza+ tyome+ koaza + " " + chiban + '</big>' + '</b>' + '<br>' +
-			"地番区域：" +  city + oaza+ tyome+ koaza + '<br>' +
+			'<b>' + '<big>' +city + oaza+ tyome + koaza + " " + chiban + '</big>' + '</b>' + '<br>' +
+			"地番区域：" +  city + oaza + tyome + koaza + '<br>' +
 			"地　番：" + chiban + '<br>' +
 			"地図名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
 			"座標系：" + zahyokei + "<small>（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】</small>" + '<br>' +
 			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）" + '<br>' +
 			"【<a href='https://www.google.co.jp/search?q=" + city + oaza+ tyome+ koaza +  chiban + "' target='_blank'>Google検索</a>】" +
-			"【<a href='https://www.google.co.jp/maps?q=" + e.lngLat.lat + "," + e.lngLat.lng + "&hl=ja' target='_blank'>GoogleMap</a>】"
+			"【<a href='https://www.google.co.jp/maps?q=" + e.lngLat.lat + "," + e.lngLat.lng + "&hl=ja' target='_blank'>GoogleMap</a>】" + 
+			"<button id='copyButton' class='copyButton' onclick='CopyFudeInfo()'>コピー</button>" 
 	).addTo(map);
+
+    //選択筆情報に更新
+    document.getElementById("select_fude_text01").innerText = city + oaza + tyome + koaza  + " " + chiban;
+    document.getElementById("select_fude_text02").innerText = '地番区域：' + city + oaza + tyome + koaza;
+    document.getElementById("select_fude_text03").innerText = '地番：' + chiban;
+    document.getElementById("select_fude_text04").innerText = '地図名：' + chizumei;
+    document.getElementById("select_fude_text05").innerText = '座標系：' + zahyokei + '（' + zahyochisyubetu + '）' + '【' + sokuchikeihanbetu + '】';
+    document.getElementById("select_fude_text06").innerText = '縮尺（精度）：' + '1/' + shukusyakubunbo + '（' + seidokubun + '）';
+    document.getElementById("select_fude_text07").innerText = '緯度経度：' + e.lngLat.lat + ',' + e.lngLat.lng;
+
 });
+
+
+
 
 
 //マウスオーバーイベント
