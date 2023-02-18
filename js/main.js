@@ -496,7 +496,8 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 //マウスオーバーイベント
 map.on('mouseover','MOJ_fude-fill', function() {
 
-	//マウスオーバーイベント
+	//ポインターに変更
+	map.getCanvas().style.cursor = 'pointer';
 
 });
 
@@ -505,7 +506,8 @@ map.on('mouseover','MOJ_fude-fill', function() {
 //マウスアウトイベント
 map.on('mouseleave','MOJ_fude-fill', function() {
 
-	//マウスアウトイベント
+	//元に戻す
+	map.getCanvas().style.cursor = '';
 
 });
 
