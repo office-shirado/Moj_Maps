@@ -491,25 +491,47 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 
 
 
+//#################マウスイベント（カーソル制御）#################
+
+//マウスイベント【fude-fill上で動いている場合】
+map.on('mousemove', 'MOJ_fude-fill', (e) => {
+	if (e.features.length > 0) {map.getCanvas().style.cursor = 'pointer'}	//ポインター
+				   else
+				   {map.getCanvas().style.cursor = ''};
+});
+
+
+//マウスイベント【ドラッグ】
+map.on('drag', function () {
+	//グラッビングに変更（つかむ）
+	map.getCanvas().style.cursor = 'grabbing';
+});
+
+
+//マウスイベント【ムーブエンド】
+map.on('moveend', function () {
+	//元に戻す
+	map.getCanvas().style.cursor = '';
+});
 
 
 //マウスオーバーイベント
 map.on('mouseover','MOJ_fude-fill', function() {
 
-	//ポインターに変更
-	map.getCanvas().style.cursor = 'pointer';
 
 });
-
 
 
 //マウスアウトイベント
 map.on('mouseleave','MOJ_fude-fill', function() {
-
 	//元に戻す
 	map.getCanvas().style.cursor = '';
 
 });
+
+//#################マウスイベント（カーソル制御）#################
+
+
 
 
 //ズームペイント透過度
