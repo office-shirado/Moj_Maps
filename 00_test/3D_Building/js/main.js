@@ -27,6 +27,7 @@ function SelectMap(){
 
 	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
 
+	map.removeLayer('PLATEAU-fill');
 
 
  	// 空中写真切替え 
@@ -128,7 +129,21 @@ function SelectMap(){
 			};
 
 
-
+        // レイヤ設定（PLATEAU）【３D建物】
+        map.addLayer({
+                  id: 'PLATEAU-fill',
+                  type: 'fill-extrusion',
+                  source: 'PLATEAU',
+                  'source-layer': 'bldg',
+		  layout: { visibility: 'visible' },
+		  minzoom: 15,
+	          maxzoom: 23,
+                  'paint': {
+                  'fill-extrusion-color': '#C0C0C0',
+                  'fill-extrusion-opacity': 0.7,
+                  'fill-extrusion-height': ['get', 'measuredHeight'],
+                  }
+	});
 
 
 
@@ -167,9 +182,9 @@ var map = new maplibregl.Map({
 
     container: 'map',
     style: {
-        center: [139.70852,35.67155], // 日本全体
-        zoom: 17, // ズームレベル
-	pitch: 45,
+        center: [139.75665,35.615], 
+        zoom: 16.2, // ズームレベル
+	pitch: 60,
         minZoom: 5,
         maxZoom: 23,
         version: 8,
