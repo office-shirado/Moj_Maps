@@ -411,19 +411,74 @@ map.on('click', 'MOJ_fude-fill', (e) => {
    var Google_LngLat = e.lngLat;
        Google_LngLat.toArray;
 
+
+
     new maplibregl.Popup()
         .setLngLat(e.lngLat)
         .setHTML(
-			'<b>' + '<big>' +city + oaza+ tyome+ koaza + " " + chiban + '</big>' + '</b>' + '<br>' +
-			"地番区域：" +  city + oaza+ tyome+ koaza + '<br>' +
+			'<b>' + '<big>' +city + oaza+ tyome + koaza + " " + chiban + '</big>' + '</b>' + '<br>' +
+			"地番区域：" +  city + oaza + tyome + koaza + '<br>' +
 			"地　番：" + chiban + '<br>' +
 			"地図名：" +  '<small>' + chizumei +  '</small>' + '<br>' +
 			"座標系：" + zahyokei + "<small>（" + zahyochisyubetu + "）" + "【" + sokuchikeihanbetu + "】</small>" + '<br>' +
 			"縮尺（精度）：1/" + shukusyakubunbo + "（" + seidokubun + "）" + '<br>' +
 			"【<a href='https://www.google.co.jp/search?q=" + city + oaza+ tyome+ koaza +  chiban + "' target='_blank'>Google検索</a>】" +
-			"【<a href='https://www.google.co.jp/maps?q=" + e.lngLat.lat + "," + e.lngLat.lng + "&hl=ja' target='_blank'>GoogleMap</a>】"
+			"【<a href='https://www.google.co.jp/maps?q=" + e.lngLat.lat + "," + e.lngLat.lng + "&hl=ja' target='_blank'>GoogleMap</a>】" + 
+			"<button id='copyButton' class='copyButton' onclick='CopyFudeInfo()'>コピー</button>" 
 	).addTo(map);
+
+    //選択筆情報に更新
+    document.getElementById("select_fude_text01").innerText = city + oaza + tyome + koaza  + " " + chiban;
+    document.getElementById("select_fude_text02").innerText = '地番区域：' + city + oaza + tyome + koaza;
+    document.getElementById("select_fude_text03").innerText = '地番：' + chiban;
+    document.getElementById("select_fude_text04").innerText = '地図名：' + chizumei;
+    document.getElementById("select_fude_text05").innerText = '座標系：' + zahyokei + '（' + zahyochisyubetu + '）' + '【' + sokuchikeihanbetu + '】';
+    document.getElementById("select_fude_text06").innerText = '縮尺（精度）：' + '1/' + shukusyakubunbo + '（' + seidokubun + '）';
+    document.getElementById("select_fude_text07").innerText = '緯度経度：' + e.lngLat.lat + ',' + e.lngLat.lng;
+
 });
+
+
+//#################マウスイベント（カーソル制御）#################
+
+//マウスイベント【fude-fill上で動いている場合】
+map.on('mousemove', 'MOJ_fude-fill', (e) => {
+	if (e.features.length > 0) {map.getCanvas().style.cursor = 'pointer'}	//ポインター
+				   else
+				   {map.getCanvas().style.cursor = ''};
+});
+
+
+//マウスイベント【ドラッグ】
+map.on('drag', function () {
+	//グラッビングに変更（つかむ）
+	map.getCanvas().style.cursor = 'grabbing';
+});
+
+
+//マウスイベント【ムーブエンド】
+map.on('moveend', function () {
+	//元に戻す
+	map.getCanvas().style.cursor = '';
+});
+
+
+//マウスオーバーイベント
+map.on('mouseover','MOJ_fude-fill', function() {
+
+
+});
+
+
+//マウスアウトイベント
+map.on('mouseleave','MOJ_fude-fill', function() {
+	//元に戻す
+	map.getCanvas().style.cursor = '';
+
+});
+
+//#################マウスイベント（カーソル制御）#################
+
 
 
 //法務省地図ポリゴン（FlatGeoBuf）ここから
