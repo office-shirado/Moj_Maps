@@ -535,7 +535,7 @@ map.on('mouseleave','MOJ_fude-fill', function() {
                     id: "MOJ_fude-fill",
                     type: "fill",
                     source: "counties",
-                  minzoom: 16,
+                  minzoom: 13,
                   maxzoom: 23,
                     paint: {
                         "fill-color": "#00FF00",	//緑
@@ -548,7 +548,7 @@ map.on('mouseleave','MOJ_fude-fill', function() {
                     id: "MOJ_fude-line",
                     type: "line",
                     source: "counties",
-                  minzoom: 16,
+                  minzoom: 13,
                   maxzoom: 23,
                     paint: {
                       "line-color": "#00AA00",
