@@ -270,10 +270,6 @@ var map = new maplibregl.Map({
 			},
 		},
 
-
-
-
-
             layers: [
             ]
     },
@@ -297,6 +293,16 @@ map.on('load', function () {
 
 
 
+	// 編集公図インポート（ソース）
+	map.addSource('Edited_MojMap_01', {
+		type : 'geojson',
+		data : './GeoJSON/Edited_MojMap/07368038_01.geojson'
+	});
+
+	map.addSource('Edited_MojMap_02', {
+		type : 'geojson',
+		data : './GeoJSON/Edited_MojMap/07368038_02.geojson'
+	});
 
 
 	// 編集公図インポート（レイヤ）
@@ -336,7 +342,7 @@ map.on('load', function () {
 		layout: {
 		},
                   'paint': {
-                    "fill-color": "#00ff00",
+                    "fill-color": "#0000ff",
                     "fill-opacity": 0.1
                   },
                 minzoom: 13,
@@ -350,7 +356,7 @@ map.on('load', function () {
 		layout: {
 		},
 		paint: {
-		'line-color': '#00ff00',
+		'line-color': '#0000ff',
 		'line-width': 1
 		},
                 minzoom: 13,
@@ -388,17 +394,6 @@ map.touchZoomRotate.disableRotation();
 //map.addControl(new maplibregl.NavigationControl(), 'top-left');
 
 
-// 現在位置表示
-map.addControl(new maplibregl.GeolocateControl({
-    positionOptions: {
-        enableHighAccuracy: true
-    },
-    fitBoundsOptions: { maxZoom: 20 },
-    trackUserLocation: false,
-    showUserLocation: false
-    }), 
-    'top-right'
-);
 
 
 //ジオコーダー（OpenStreetMap）
@@ -440,6 +435,20 @@ var geocoder_api = {
 	}
 };
 map.addControl(new MaplibreGeocoder(geocoder_api, {maplibregl: maplibregl}));
+
+
+// 現在位置表示
+map.addControl(new maplibregl.GeolocateControl({
+    positionOptions: {
+        enableHighAccuracy: true
+    },
+    fitBoundsOptions: { maxZoom: 20 },
+    trackUserLocation: false,
+    showUserLocation: false
+    }), 
+    'top-right'
+);
+
 
 
 //#################マップコントロール（画面制御）#################
@@ -628,7 +637,6 @@ map.on('mouseleave','MOJ_fude-fill', function() {
 
 
 
-
 //#################ズームイベント（透過度）#################
 
 //ズームペイント透過度
@@ -654,6 +662,5 @@ map.on('zoom', function() {
 });
 
 //#################ズームイベント（透過度）#################
-
 
 
