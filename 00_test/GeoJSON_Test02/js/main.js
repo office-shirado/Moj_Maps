@@ -646,7 +646,6 @@ map.on('zoom', function() {
 			else
 			{
 			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 0.1);
-			map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
 			};
 
 	if( zoomlv > 17) {
@@ -656,7 +655,6 @@ map.on('zoom', function() {
 			else
 			{
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
-			map.setPaintProperty('Edited_MojMap_Fill_01', 0.2);
 			};
 });
 
