@@ -342,7 +342,7 @@ map.on('load', function () {
 		layout: {
 		},
                   'paint': {
-                    "fill-color": "#0000ff",
+                    "fill-color": "#00ff00",
                     "fill-opacity": 0.1
                   },
                 minzoom: 13,
@@ -356,7 +356,7 @@ map.on('load', function () {
 		layout: {
 		},
 		paint: {
-		'line-color': '#0000ff',
+		'line-color': '#00ff00',
 		'line-width': 1
 		},
                 minzoom: 13,
