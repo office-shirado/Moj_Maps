@@ -477,7 +477,7 @@ function CopyFudeInfo(){
 
 };
 
-//クリック属性表示
+//クリック属性表示（法務省地図）
 map.on('click', 'MOJ_fude-fill', (e) => {
     var chizumei = e.features[0].properties['地図名'];
     var city = e.features[0].properties['市区町村名'];
@@ -527,6 +527,63 @@ map.on('click', 'MOJ_fude-fill', (e) => {
     document.getElementById("select_fude_text04").innerText = '地図名：' + chizumei;
     document.getElementById("select_fude_text05").innerText = '座標系：' + zahyokei + '（' + zahyochisyubetu + '）' + '【' + sokuchikeihanbetu + '】';
     document.getElementById("select_fude_text06").innerText = '縮尺（精度）：' + '1/' + shukusyakubunbo + '（' + seidokubun + '）';
+    document.getElementById("select_fude_text07").innerText = '緯度経度：' + e.lngLat.lat + ',' + e.lngLat.lng;
+
+});
+
+//#################クリックイベント（法務省地図）#################
+
+
+//#################クリックイベント（法務省地図）#################
+
+// 選択筆情報コピー
+function CopyFudeInfo(){
+  var fude_info01 = document.getElementById("select_fude_text01").value;
+  var fude_info02 = document.getElementById("select_fude_text02").value;
+  var fude_info03 = document.getElementById("select_fude_text03").value;
+  var fude_info04 = document.getElementById("select_fude_text04").value;
+  var fude_info05 = document.getElementById("select_fude_text05").value;
+  var fude_info06 = document.getElementById("select_fude_text06").value;
+  var fude_info07 = document.getElementById("select_fude_text07").value;
+
+  var select_fude_info = fude_info01 + '\n' +
+			 fude_info02 + '\n' +
+			 fude_info03 + '\n' +
+			 fude_info04 + '\n' +
+			 fude_info05 + '\n' +
+			 fude_info06 + '\n' +
+			 fude_info07 + '\n';
+
+  navigator.clipboard.writeText(select_fude_info);
+
+
+};
+
+//クリック属性表示（法務省地図）
+map.on('click', 'Edited_MojMap_Fill_01', (e) => {
+    var chibankuiki = e.features[0].properties['地番区域'];
+    var chiban = e.features[0].properties['地番'];
+
+   var Google_LngLat = e.lngLat;
+       Google_LngLat.toArray;
+
+
+
+    new maplibregl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(
+			'<b>' + '<big>' + chibankuiki + " " + chiban + '</big>' + '</b>' + '<br>' +
+			"地番区域：" +  chibankuiki + '<br>' +
+			"地　番：" + chiban + '<br>' +
+			"【<a href='https://www.google.co.jp/search?q=" + chibankuiki +  chiban + "' target='_blank'>Google検索</a>】" +
+			"【<a href='https://www.google.co.jp/maps?q=" + e.lngLat.lat + "," + e.lngLat.lng + "&hl=ja' target='_blank'>GoogleMap</a>】" + 
+			"<button id='copyButton' class='copyButton' onclick='CopyFudeInfo()'>コピー</button>" 
+	).addTo(map);
+
+    //選択筆情報に更新
+    document.getElementById("select_fude_text01").innerText = chibankuiki  + " " + chiban;
+    document.getElementById("select_fude_text02").innerText = '地番区域：' + chibankuiki + koaza;
+    document.getElementById("select_fude_text03").innerText = '地番：' + chiban;
     document.getElementById("select_fude_text07").innerText = '緯度経度：' + e.lngLat.lat + ',' + e.lngLat.lng;
 
 });
