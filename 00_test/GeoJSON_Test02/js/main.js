@@ -317,7 +317,7 @@ map.on('load', function () {
                     "fill-opacity": 0.2
                   },
                 minzoom: 13,
-                maxzoom: 16,
+                maxzoom: 23,
 	});
 
 	map.addLayer({
@@ -346,7 +346,7 @@ map.on('load', function () {
                     "fill-opacity": 0.2
                   },
                 minzoom: 13,
-                maxzoom: 16,
+                maxzoom: 23,
 	});
 
 	map.addLayer({
@@ -559,7 +559,7 @@ function CopyFudeInfo(){
 
 };
 
-//クリック属性表示（法務省地図）
+//クリック属性表示（法務省地図）【編集01】
 map.on('click', 'Edited_MojMap_Fill_01', (e) => {
     var chibankuiki = e.features[0].properties['地番区域'];
     var chiban = e.features[0].properties['地番'];
@@ -569,7 +569,7 @@ map.on('click', 'Edited_MojMap_Fill_01', (e) => {
 
 
 
-    new maplibregl.Popup()
+    new maplibregl.Popup({closeOnClick: true})
         .setLngLat(e.lngLat)
         .setHTML(
 			'<b>' + '<big>' + chibankuiki + " " + chiban + '</big>' + '</b>' + '<br>' +
@@ -651,10 +651,14 @@ map.on('zoom', function() {
 
 	if( zoomlv > 17) {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
+			map.setPaintProperty('Edited_MojMap_Fill_01', 0);
+			map.setPaintProperty('Edited_MojMap_Fill_02', 0);
 			}
 			else
 			{
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
+			map.setPaintProperty('Edited_MojMap_Fill_01', 0.2);
+			map.setPaintProperty('Edited_MojMap_Fill_02', 0.2);
 			};
 });
 
