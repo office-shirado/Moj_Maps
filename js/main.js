@@ -1,3 +1,4 @@
+//ジャンプ（現在地）
 function getLocation(getLatLng) {
 
     map.flyTo({
@@ -8,62 +9,8 @@ function getLocation(getLatLng) {
     });
 };
 
-function SelectMap(){
-
-	var BaseMapName = document.getElementById('basemaps').value;
-	var zoomlv = map.getZoom()
-
-	if (map.getLayer('GSI_pale')) map.removeLayer('GSI_pale');
-	if (map.getLayer('GSI_seamlessphoto')) map.removeLayer('GSI_seamlessphoto');
-	if (map.getLayer('GSI_ort_USA10')) map.removeLayer('GSI_ort_USA10');
-	if (map.getLayer('GSI_ort_old10')) map.removeLayer('GSI_ort_old10');
-	if (map.getLayer('GSI_gazo1')) map.removeLayer('GSI_gazo1');
-	if (map.getLayer('GSI_gazo2')) map.removeLayer('GSI_gazo2');
-	if (map.getLayer('GSI_gazo3')) map.removeLayer('GSI_gazo3');
-	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
-
-	map.removeLayer('MOJ_fude-fill');
-	map.removeLayer('MOJ_fude-line');
-
-	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
-
-
-
- 	// 空中写真切替え 
-	if( BaseMapName =="GSI_pale-seamlessphoto") 
-	{
-		map.addLayer({
-	          'id': 'GSI_seamlessphoto',
-	          'type': 'raster',
-	          'source': 'GSI_seamlessphoto',
-	          'minzoom': 15,
-	          'maxzoom': 23,
-        	    }),
-		map.addLayer({
-	          'id': 'GSI_pale',
-	          'type': 'raster',
-	          'source': 'GSI_pale',
-	          'minzoom': 0,
-	          'maxzoom': 18,
-        	    });
-		if( zoomlv > 16) {
-				map.setPaintProperty('GSI_pale', 'raster-opacity', 0.4);
-				}
-			else
-				{
-				map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
-				};
-	}
-	else
-	{
-		map.addLayer({
-	          'id': BaseMapName,
-	          'type': 'raster',
-	          'source': BaseMapName,
-	          'minzoom': 14,
-	          'maxzoom': 23,
-        	    });
-	};
+//法務省地図レイヤ設定
+function set_MOJ_Map() {
 
 	var zoomlv = map.getZoom();
 
@@ -126,15 +73,73 @@ function SelectMap(){
 			{
 				if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
 			};
-
-
-
-
-
-
-
 };
 
+
+//ベース地図選択
+function SelectMap(){
+
+	var BaseMapName = document.getElementById('basemaps').value;
+	var zoomlv = map.getZoom()
+
+	if (map.getLayer('GSI_pale')) map.removeLayer('GSI_pale');
+	if (map.getLayer('GSI_seamlessphoto')) map.removeLayer('GSI_seamlessphoto');
+	if (map.getLayer('GSI_ort_USA10')) map.removeLayer('GSI_ort_USA10');
+	if (map.getLayer('GSI_ort_old10')) map.removeLayer('GSI_ort_old10');
+	if (map.getLayer('GSI_gazo1')) map.removeLayer('GSI_gazo1');
+	if (map.getLayer('GSI_gazo2')) map.removeLayer('GSI_gazo2');
+	if (map.getLayer('GSI_gazo3')) map.removeLayer('GSI_gazo3');
+	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
+
+	map.removeLayer('MOJ_fude-fill');
+	map.removeLayer('MOJ_fude-line');
+
+	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
+
+
+
+ 	// 空中写真切替え 
+	if( BaseMapName =="GSI_pale-seamlessphoto") 
+	{
+		map.addLayer({
+	          'id': 'GSI_seamlessphoto',
+	          'type': 'raster',
+	          'source': 'GSI_seamlessphoto',
+	          'minzoom': 15,
+	          'maxzoom': 23,
+        	    }),
+		map.addLayer({
+	          'id': 'GSI_pale',
+	          'type': 'raster',
+	          'source': 'GSI_pale',
+	          'minzoom': 0,
+	          'maxzoom': 18,
+        	    });
+		if( zoomlv > 16) {
+				map.setPaintProperty('GSI_pale', 'raster-opacity', 0.4);
+				}
+			else
+				{
+				map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
+				};
+	}
+	else
+	{
+		map.addLayer({
+	          'id': BaseMapName,
+	          'type': 'raster',
+	          'source': BaseMapName,
+	          'minzoom': 14,
+	          'maxzoom': 23,
+        	    });
+	};
+
+	//法務省地図レイヤセット
+	set_MOJ_Map();
+};
+
+
+//代表点表示設定
 function SelectView(){
 	var Moj_daihyoten = document.getElementById('daihyoten').value;
 	if( Moj_daihyoten =="visible")
@@ -266,49 +271,50 @@ var map = new maplibregl.Map({
 		},
 
             layers: [
-                // レイヤ設定（シームレス空中写真）
-                {
-                  id: 'GSI_seamlessphoto',
-                  type: 'raster',
-                  source: 'GSI_seamlessphoto',
-                  minzoom: 15,
-                  maxzoom: 23,
-                },
-
-                // レイヤ設定（淡色地図）
-                {
-                  id: 'GSI_pale',
-                  type: 'raster',
-                  source: 'GSI_pale',
-                  minzoom: 0,
-                  maxzoom: 18,
-                },
-
-                // レイヤ設定（法務省地図）【ポリゴン】
-                {
-                  id: 'MOJ_fude-fill',
-                  type: 'fill',
-                  source: 'MOJ_Map',
-                  'source-layer': 'fude',
-                  'paint': {
-                    "fill-color": "#ffff00",
-                    "fill-opacity": 0.2
-                  }
-                },
-
-                // レイヤ設定（法務省地図）【ライン】
-                {
-                  id: 'MOJ_fude-line',
-                  type: 'line',
-                  source: 'MOJ_Map',
-                  'source-layer': 'fude',
-                  'paint': {
-                    "line-color": "#ff0000",
-                  },
-                },
             ]
     },
 });
+
+
+
+
+    
+//#################ロード時アクション#################
+
+// ロードアクション
+map.on('load', function () {
+
+	//ベースマップ、法務省地図読込み（レイヤ設定）
+	SelectMap();
+
+
+	// 現在地取得
+	navigator.geolocation.getCurrentPosition(getLocation);
+
+});
+
+//#################ロード時アクション#################
+
+
+
+//#################マップコントロール（画面制御）#################
+
+//ダブルクリックズーム制御（しない）
+map.doubleClickZoom.disable();
+
+//ドラッグ回転制御（しない）
+map.dragRotate.disable();
+
+//ピッチ回転制御（しない）
+//map.pitchWithRotate.disable();
+
+//タッチズーム回転制御（しない）
+map.touchZoomRotate.disableRotation();
+
+
+// マップコントロール（拡大・縮小・方位）
+//map.addControl(new maplibregl.NavigationControl(), 'top-left');
+
 
 //ジオコーダー（OpenStreetMap）
 var geocoder_api = {
@@ -351,52 +357,6 @@ var geocoder_api = {
 map.addControl(new MaplibreGeocoder(geocoder_api, {maplibregl: maplibregl}));
 
 
-    
-
-// ロードアクション
-map.on('load', function () {
-
-	// ロード時のアクション（現在地取得）
-	navigator.geolocation.getCurrentPosition(getLocation);
-
-	//選択筆情報パネル表示
-//	document.getElementById("select_fude_text01").style.visibility = "visible";
-//	document.getElementById("select_fude_text02").style.visibility = "visible";
-//	document.getElementById("select_fude_text03").style.visibility = "visible";
-//	document.getElementById("select_fude_text04").style.visibility = "visible";
-//	document.getElementById("select_fude_text05").style.visibility = "visible";
-//	document.getElementById("select_fude_text06").style.visibility = "visible";
-//	document.getElementById("select_fude_text07").style.visibility = "visible";
-//	document.getElementById("select_fude_text08").style.visibility = "visible";
-
-
-
-
-});
-
-
-
-
-
-
-//ダブルクリックズーム制御（しない）
-map.doubleClickZoom.disable();
-
-//ドラッグ回転制御（しない）
-map.dragRotate.disable();
-
-//ピッチ回転制御（しない）
-//map.pitchWithRotate.disable();
-
-//タッチズーム回転制御（しない）
-map.touchZoomRotate.disableRotation();
-
-
-// マップコントロール（拡大・縮小・方位）
-//map.addControl(new maplibregl.NavigationControl(), 'top-left');
-
-
-
 // 現在位置表示
 map.addControl(new maplibregl.GeolocateControl({
     positionOptions: {
@@ -410,6 +370,11 @@ map.addControl(new maplibregl.GeolocateControl({
 );
 
 
+//#################マップコントロール（画面制御）#################
+
+
+
+//#################クリックイベント（法務省地図）#################
 
 // 選択筆情報コピー
 function CopyFudeInfo(){
@@ -433,7 +398,6 @@ function CopyFudeInfo(){
 
 
 };
-
 
 //クリック属性表示
 map.on('click', 'MOJ_fude-fill', (e) => {
@@ -489,6 +453,8 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 
 });
 
+//#################クリックイベント（法務省地図）#################
+
 
 
 //#################マウスイベント（カーソル制御）#################
@@ -533,6 +499,7 @@ map.on('mouseleave','MOJ_fude-fill', function() {
 
 
 
+//#################ズームイベント（透過度）#################
 
 //ズームペイント透過度
 map.on('zoom', function() {
@@ -555,5 +522,7 @@ map.on('zoom', function() {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
 			};
 });
+
+//#################ズームイベント（透過度）#################
 
 
