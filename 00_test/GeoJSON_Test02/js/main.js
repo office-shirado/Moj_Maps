@@ -270,6 +270,10 @@ var map = new maplibregl.Map({
 			},
 		},
 
+
+
+
+
             layers: [
             ]
     },
@@ -293,16 +297,6 @@ map.on('load', function () {
 
 
 
-	// 編集公図インポート（ソース）
-	map.addSource('Edited_MojMap_01', {
-		type : 'geojson',
-		data : './GeoJSON/Edited_MojMap/07368038_01.geojson'
-	});
-
-	map.addSource('Edited_MojMap_02', {
-		type : 'geojson',
-		data : './GeoJSON/Edited_MojMap/07368038_02.geojson'
-	});
 
 
 	// 編集公図インポート（レイヤ）
@@ -314,10 +308,10 @@ map.on('load', function () {
 		},
                   'paint': {
                     "fill-color": "#0000ff",
-                    "fill-opacity": 0.2
+                    "fill-opacity": 0.1
                   },
                 minzoom: 13,
-                maxzoom: 23,
+                maxzoom: 20,
 	});
 
 	map.addLayer({
@@ -343,10 +337,10 @@ map.on('load', function () {
 		},
                   'paint': {
                     "fill-color": "#00ff00",
-                    "fill-opacity": 0.2
+                    "fill-opacity": 0.1
                   },
                 minzoom: 13,
-                maxzoom: 23,
+                maxzoom: 20,
 	});
 
 	map.addLayer({
@@ -634,6 +628,7 @@ map.on('mouseleave','MOJ_fude-fill', function() {
 
 
 
+
 //#################ズームイベント（透過度）#################
 
 //ズームペイント透過度
@@ -646,11 +641,11 @@ map.on('zoom', function() {
 			else
 			{
 			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 0.1);
+			map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
 			};
 
 	if( zoomlv > 17) {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
-			map.setPaintProperty('Edited_MojMap_Fill_01', 0);
 			}
 			else
 			{
@@ -659,5 +654,6 @@ map.on('zoom', function() {
 });
 
 //#################ズームイベント（透過度）#################
+
 
 
