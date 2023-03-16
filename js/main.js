@@ -82,7 +82,7 @@ function set_MOJ_Map() {
                   'source': 'Edited_MOJ_Map',
                   'source-layer': 'moj_map',
                   'paint': {
-                    "fill-color": "#00ff00",
+                    "fill-color": "#0000ff",
                     "fill-opacity": 0.2
                   }
 	});
@@ -101,7 +101,7 @@ function set_MOJ_Map() {
                   'source': 'Edited_MOJ_Map',
                   'source-layer': 'moj_map',
                   'paint': {
-                    "line-color": "#00ff00",
+                    "line-color": "#0000ff",
                   },
 	});
 	if( zoomlv > 16) {
