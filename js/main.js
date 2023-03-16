@@ -73,6 +73,46 @@ function set_MOJ_Map() {
 			{
 				if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
 			};
+
+
+	//法務省地図（編集）【ポリゴン】
+        map.addLayer({
+                  'id': 'Edited_MOJ_fude-fill',
+                  'type': 'fill',
+                  'source': 'Edited_MOJ_Map',
+                  'source-layer': 'moj_map',
+                  'paint': {
+                    "fill-color": "#00ff00",
+                    "fill-opacity": 0.2
+                  }
+	});
+	if( zoomlv > 17) {
+			map.setPaintProperty('Edited_MOJ_fude-fill', 'fill-opacity', 0);
+			}
+			else
+			{
+			map.setPaintProperty('Edited_MOJ_fude-fill', 'fill-opacity', 0.2);
+			};
+
+	//法務省地図（編集）【ライン】
+        map.addLayer({
+                  'id': 'Edited_MOJ_fude-line',
+                  'type': 'line',
+                  'source': 'Edited_MOJ_Map',
+                  'source-layer': 'moj_map',
+                  'paint': {
+                    "line-color": "#00ff00",
+                  },
+	});
+	if( zoomlv > 16) {
+			map.setPaintProperty('Edited_MOJ_fude-line', 'line-opacity', 1.0);
+			}
+			else
+			{
+			map.setPaintProperty('Edited_MOJ_fude-line', 'line-opacity', 0.1);
+			};
+
+
 };
 
 
@@ -268,7 +308,18 @@ var map = new maplibregl.Map({
                 maxzoom: 16,
                 attribution:"<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
 			},
+
+            // 法務省地図（編集）
+            Edited_MOJ_Map: {
+                type: 'vector',
+                tiles: ['https://office-shirado.github.io/Moj_Maps/Edited_Moj_Map/{z}/{x}/{y}.pbf'],
+                minzoom: 5,
+                maxzoom: 16,
+                attribution:"<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
+			},
+
 		},
+
 
             layers: [
             ]
@@ -456,11 +507,58 @@ map.on('click', 'MOJ_fude-fill', (e) => {
 //#################クリックイベント（法務省地図）#################
 
 
+//#################クリックイベント（法務省地図）【編集】#################
+//クリック属性表示（法務省地図）【編集】
+map.on('click', 'Edited_MOJ_fude-fill', (e) => {
+    var chibankuiki02 = e.features[0].properties['地番区域'];
+    var chiban02 = e.features[0].properties['地番'];
+
+   var Google_LngLat = e.lngLat;
+       Google_LngLat.toArray;
+
+
+
+    var PopUp02 = new maplibregl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(
+			'<b>' + '<big>' + chibankuiki02 + " " + chiban02 + '</big>' + '</b>' + '<br>' +
+			"地番区域：" +  chibankuiki02 + '<br>' +
+			"地　番：" + chiban02 + '<br>' +
+			"※この筆形状は法務省地図（公開データ）を変形させて作成したものですので、参考としてご利用下さい。" + '<br>' +
+			"【<a href='https://www.google.co.jp/search?q=" + chibankuiki02 +  chiban02 + "' target='_blank'>Google検索</a>】" +
+			"【<a href='https://www.google.co.jp/maps?q=" + e.lngLat.lat + "," + e.lngLat.lng + "&hl=ja' target='_blank'>GoogleMap</a>】" + 
+			"<button id='copyButton' class='copyButton' onclick='CopyFudeInfo()'>コピー</button>" 
+	).addTo(map);
+
+
+
+    //選択筆情報に更新
+    document.getElementById("select_fude_text01").innerText = chibankuiki02  + " " + chiban02;
+    document.getElementById("select_fude_text02").innerText = '地番区域：' + chibankuiki02;
+    document.getElementById("select_fude_text03").innerText = '地番：' + chiban02;
+    document.getElementById("select_fude_text04").innerText = '地図名：';
+    document.getElementById("select_fude_text05").innerText = '座標系：';
+    document.getElementById("select_fude_text06").innerText = '縮尺（精度）：';
+    document.getElementById("select_fude_text07").innerText = '緯度経度：' + e.lngLat.lat + ',' + e.lngLat.lng;
+
+});
+
+//#################クリックイベント（法務省地図）【編集】#################
+
+
+
 
 //#################マウスイベント（カーソル制御）#################
 
 //マウスイベント【fude-fill上で動いている場合】
 map.on('mousemove', 'MOJ_fude-fill', (e) => {
+	if (e.features.length > 0) {map.getCanvas().style.cursor = 'pointer'}	//ポインター
+				   else
+				   {map.getCanvas().style.cursor = ''};
+});
+
+//マウスイベント【Edited_fude-fill上で動いている場合】
+map.on('mousemove', 'Edited_MOJ_fude-fill', (e) => {
 	if (e.features.length > 0) {map.getCanvas().style.cursor = 'pointer'}	//ポインター
 				   else
 				   {map.getCanvas().style.cursor = ''};
@@ -481,15 +579,20 @@ map.on('moveend', function () {
 });
 
 
-//マウスオーバーイベント
+//マウスオーバーイベント（法務省地図）＜未実装＞
 map.on('mouseover','MOJ_fude-fill', function() {
-
-
 });
 
 
-//マウスアウトイベント
+//マウスアウトイベント（法務省地図）
 map.on('mouseleave','MOJ_fude-fill', function() {
+	//元に戻す
+	map.getCanvas().style.cursor = '';
+
+});
+
+//マウスアウトイベント（法務省地図）【編集】
+map.on('mouseleave','Edited_MOJ_fude-fill', function() {
 	//元に戻す
 	map.getCanvas().style.cursor = '';
 
@@ -506,20 +609,24 @@ map.on('zoom', function() {
 	var zoomlv = map.getZoom();
 	if( zoomlv > 16) {
 			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 1.0);
+			map.setPaintProperty('Edited_MOJ_fude-line', 'line-opacity', 1.0);
 			map.setPaintProperty('GSI_pale', 'raster-opacity', 0.4);
 			}
 			else
 			{
 			map.setPaintProperty('MOJ_fude-line', 'line-opacity', 0.1);
+			map.setPaintProperty('Edited_MOJ_fude-line', 'line-opacity', 0.1);
 			map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
 			};
 
 	if( zoomlv > 17) {
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0);
+			map.setPaintProperty('Edited_MOJ_fude-fill', 'fill-opacity', 0);
 			}
 			else
 			{
 			map.setPaintProperty('MOJ_fude-fill', 'fill-opacity', 0.2);
+			map.setPaintProperty('Edited_MOJ_fude-fill', 'fill-opacity', 0.2);
 			};
 });
 
