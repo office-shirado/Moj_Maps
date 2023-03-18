@@ -131,10 +131,16 @@ function SelectMap(){
 	if (map.getLayer('GSI_gazo3')) map.removeLayer('GSI_gazo3');
 	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
 
-	map.removeLayer('MOJ_fude-fill');
-	map.removeLayer('MOJ_fude-line');
+	if (map.getLayer('MOJ_fude-fill')) map.removeLayer('MOJ_fude-fill');
+	if (map.getLayer('MOJ_fude-line')) map.removeLayer('MOJ_fude-line');
 
 	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
+
+	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
+	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
+
+	if (map.getLayer('Edited_MOJ_fude-fill')) map.removeLayer('Edited_MOJ_fude-fill');
+	if (map.getLayer('Edited_MOJ_fude-line')) map.removeLayer('Edited_MOJ_fude-line');
 
 
 
