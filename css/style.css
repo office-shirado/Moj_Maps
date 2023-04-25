@@ -3,6 +3,9 @@ body {
     padding: 0;
 }
 
+a {
+	color: navy;
+}
 
 #map {
     position: absolute;
