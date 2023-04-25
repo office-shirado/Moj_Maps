@@ -343,7 +343,11 @@ map.on('load', function () {
 
 
 	// 現在地取得
+	var ZoomLv = map.getZoom();
+	//初期ズームレベルの時は、現在地ジャンプ
+	if (ZoomLv == 4){
 	navigator.geolocation.getCurrentPosition(getLocation);
+	}
 
 });
 
