@@ -211,7 +211,7 @@ function SelectView(){
 
 
 // マップ設定
-var map = new maplibregl.Map({
+const map = new maplibregl.Map({
 
     container: 'map',
     style: {
