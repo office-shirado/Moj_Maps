@@ -214,13 +214,13 @@ function SelectView(){
 const map = new maplibregl.Map({
 
     container: 'map',
+    hash: true,
     style: {
         center: [139.75417,36.50], // 日本全体
         zoom: 4, // ズームレベル
         minZoom: 5,
         maxZoom: 23,
         version: 8,
-	hash: true,
 	sources: {
             // シームレス空中写真
             GSI_seamlessphoto: {
