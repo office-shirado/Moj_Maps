@@ -443,6 +443,8 @@ function CopyFudeInfo(){
   var fude_info05 = document.getElementById("select_fude_text05").value;
   var fude_info06 = document.getElementById("select_fude_text06").value;
   var fude_info07 = document.getElementById("select_fude_text07").value;
+  var fude_info08 = document.getElementById("select_fude_text08").value;
+
 
   var select_fude_info = fude_info01 + '\n' +
 			 fude_info02 + '\n' +
@@ -450,7 +452,8 @@ function CopyFudeInfo(){
 			 fude_info04 + '\n' +
 			 fude_info05 + '\n' +
 			 fude_info06 + '\n' +
-			 fude_info07 + '\n';
+			 fude_info07 + '\n' +
+			 fude_info08 + '\n';
 
   navigator.clipboard.writeText(select_fude_info);
 
@@ -484,6 +487,7 @@ map.on('click', 'MOJ_fude-fill', (e) => {
    var Google_LngLat = e.lngLat;
        Google_LngLat.toArray;
 
+  var ZoomLv02 = map.getZoom();
 
 
     new maplibregl.Popup()
@@ -508,6 +512,7 @@ map.on('click', 'MOJ_fude-fill', (e) => {
     document.getElementById("select_fude_text05").innerText = '座標系：' + zahyokei + '（' + zahyochisyubetu + '）' + '【' + sokuchikeihanbetu + '】';
     document.getElementById("select_fude_text06").innerText = '縮尺（精度）：' + '1/' + shukusyakubunbo + '（' + seidokubun + '）';
     document.getElementById("select_fude_text07").innerText = '緯度経度：' + e.lngLat.lat + ',' + e.lngLat.lng;
+    document.getElementById("select_fude_text08").innerText = 'https://office-shirado.github.io/Moj_Maps/#' + ZoomLv02 + '/' + e.lngLat.lat + '/' + e.lngLat.lng;
 
 });
 
