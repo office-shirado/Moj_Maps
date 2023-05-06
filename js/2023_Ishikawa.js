@@ -113,7 +113,7 @@ function set_MOJ_Map() {
 			};
 
 
-	//法務省地図【代表点】
+	//農地ピン
         map.addLayer({
       		  'id': 'Nouchi_Pin_17205_SuzuCity',
                   'type': 'circle',
