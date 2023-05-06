@@ -400,7 +400,7 @@ map.on('load', function () {
 	// 編集公図インポート（ソース）
 	map.addSource('Nouchi_Pin_GeoJSON', {
 		type : 'geojson',
-		data : 'https://office-shirado.github.io/Moj_Maps/GeoJSON/Nouchi_Pin/Nouchi_Pin_17205_SuzuCity.geojson'
+		data : 'https://office-shirado.github.io/Moj_Maps/GeoJSON/Nouchi_Pin/Nouchi_Pin_17205_SuzuCity02.geojson'
 	});
 
 	// 編集公図インポート（レイヤ）
@@ -409,7 +409,7 @@ map.on('load', function () {
 		type: 'symbol',
 		source: 'Nouchi_Pin_GeoJSON',
 		'layout': {
-			"text-field": "{地番}",
+			"text-field": "{title}",
 		        "text-font": ["Open Sans Regular"],
             		"text-size": 12,
 		        "text-offset": [0, 0.6],
