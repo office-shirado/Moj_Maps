@@ -113,6 +113,30 @@ function set_MOJ_Map() {
 			};
 
 
+	//法務省地図【代表点】
+        map.addLayer({
+      		  'id': 'Nouchi_Pin_17205_SuzuCity',
+                  'type': 'circle',
+                  'source': 'Nouchi_Pin',
+                  'source-layer': 'Nouchi_Pin',
+                  'paint': {
+                    'circle-radius': 5,  //半径
+                    'circle-color': 'rgba(128,255,128,0.5)',
+                    'circle-opacity': 1.0
+                  },
+
+		'layout': {
+		//ここに、テキストの表示スタイルが入ると思うんだけど・・・。
+		},
+
+
+
+                  'minzoom': 16,
+                  'maxzoom': 23,
+		});
+
+
+
 };
 
 
@@ -216,8 +240,8 @@ const map = new maplibregl.Map({
     container: 'map',
     hash: true,
     style: {
-        center: [139.75417,36.50], // 日本全体
-        zoom: 4, // ズームレベル
+        center: [137.260,37.436], // 日本全体
+        zoom: 17, // ズームレベル
         minZoom: 5,
         maxZoom: 23,
         version: 8,
@@ -321,6 +345,15 @@ const map = new maplibregl.Map({
                 attribution:"<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
 			},
 
+            // 農地ピン（珠洲市）
+            Nouchi_Pin: {
+                type: 'vector',
+                tiles: ['https://office-shirado.github.io/Moj_Maps/Nouchi_Pin/{z}/{x}/{y}.pbf'],
+                minzoom: 16,
+                maxzoom: 16,
+                attribution:"<a href='https://map.maff.go.jp/' target='_blank'>農地ナビ</a>",
+			},
+
 		},
 
 
@@ -343,11 +376,11 @@ map.on('load', function () {
 
 
 	// 現在地取得
-	var ZoomLv = map.getZoom();
-	//初期ズームレベルの時は、現在地ジャンプ
-	if (ZoomLv == 4){
-	navigator.geolocation.getCurrentPosition(getLocation);
-	}
+//	var ZoomLv = map.getZoom();
+//	//初期ズームレベルの時は、現在地ジャンプ
+//	if (ZoomLv == 4){
+//	navigator.geolocation.getCurrentPosition(getLocation);
+//	}
 
 });
 
