@@ -123,6 +123,8 @@ function set_MOJ_Map() {
                     'circle-radius': 5,  //半径
                     'circle-color': 'rgba(128,255,128,0.5)',
                     'circle-opacity': 1.0
+		//ここに、テキストの表示スタイルが入ると思うんだけど・・・。
+
                   },
 
 		'layout': {
