@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <title>今ここ何番地？（2023石川地震特設サイト）</title>
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="石川地震用特設サイト（テスト中）">
+    <!-- MapLibre -->
+    <script src='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js'></script>
+    <link href='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css' rel='stylesheet' />
+
+    <!-- ジオコーダー（OpenStreetmap） -->
+    <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.css" type="text/css" />
+
+    <!-- FlatGeoBuf -->
+    <script src="https://unpkg.com/flatgeobuf@3.22.0/dist/flatgeobuf-geojson.min.js"></script>
+    <script src="https://unpkg.com/json-formatter-js"></script>
+
+    <!-- Underscore -->
+    <script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
+
+
+    <link href="css/style.css" rel="stylesheet">
+
+
+</head>
+<body>
+
+
+    <div id="map"></div>
+    <script src="js/2023_Ishikawa.js"></script>
+
+
+
+
+    <div id="info01">
+      <center>
+      <a href ="https://office-shirado.github.io/Moj_Maps/2023_Ishikawa_SuzuCity.html" target="_self"><b><big>今ここ何番地？</big></b><small>(Ver2.16)</small></a><br>
+      <small>令和５年石川地震特設サイト</small><br>
+      <a href="https://github.com/office-shirado/Moj_Maps" target="_blank"><small>Office Shirado（GitHub)</small></a>
+      </center>
+    </div>
+
+    <div class = "select_fudetext">
+    <textarea id="select_fude_text01">地番区域・地番</textarea><br>
+    <textarea id="select_fude_text02">地番区域</textarea><br>
+    <textarea id="select_fude_text03">地番</textarea><br>
+    <textarea id="select_fude_text04">地図名</textarea><br>
+    <textarea id="select_fude_text05">座標系</textarea><br>
+    <textarea id="select_fude_text06">縮尺（精度）</textarea><br>
+    <textarea id="select_fude_text07">緯度経度</textarea>
+    <textarea id="select_fude_text08">https://office-shirado.github.io/Moj_Maps/</textarea>
+    </div>
+
+    <div id="info02">
+      <select id ="basemaps" onchange="SelectMap()">
+        <option value="GSI_pale-seamlessphoto">【全国】淡色地図・空中写真</option>
+        <option value="GSI_ort_USA10">【一部】1945年～1950年</option>
+        <option value="GSI_ort_old10"> 【一部】1961年～1969年</option>
+        <option value="GSI_gazo1">【全国】1974年～1978年</option>
+        <option value="GSI_gazo2">【一部】1979年～1983年</option>
+        <option value="GSI_gazo3">【一部】1984年～1986年</option>
+        <option value="GSI_gazo4">【一部】1988年～1990年</option>
+        <option value="NoBaseMap">【地理院タイルなし】</option>
+      </select>
+      <br>
+      <select id ="daihyoten" onchange="SelectView()">
+        <option value="visible">【法務省地図】代表点あり</option>
+        <option value="invisible" selected>【法務省地図】代表点なし</option>
+      </select>
+      <br>
+      <center>
+      <a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a><br>
+      <small>Supecial Thanks:MOJ,GSI,amx-a</small>
+      </center>
+    </div>
+
+</body>
+</html>
