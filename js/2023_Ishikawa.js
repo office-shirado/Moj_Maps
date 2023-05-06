@@ -117,19 +117,32 @@ function set_MOJ_Map() {
         map.addLayer({
       		  'id': 'Nouchi_Pin_17205_SuzuCity',
                   'type': 'circle',
+//                  'type': 'symbol',
                   'source': 'Nouchi_Pin',
                   'source-layer': 'Nouchi_Pin',
+
+
+		  'layout': {
+//                    'text-field':['get', '地番'],
+//	            'text-font': ['Open Sans Regular'],
+//	            'text-size': 12
+
+
+//            'text-offset': [0, 0.6],
+//            'text-anchor': "top"
+
+//                    'text-field': ['get', '地番'],
+//                    'text-size': 12,
+		  },
                   'paint': {
-                    'circle-radius': 5,  //半径
-                    'circle-color': 'rgba(128,255,128,0.5)',
-                    'circle-opacity': 1.0
-		//ここに、テキストの表示スタイルが入ると思うんだけど・・・。
+//			 'text-color': 'rgba(0,　152,　0, 1)',
+//		         'text-opacity': 0.8
 
+//                    'text-color': 'rgba(0,　152,　0, 1)',
+//                    'text-halo-blur': 1,
+//                    'text-halo-color': 'rgba(255, 255, 255, 1)',
+//                    'text-halo-width': 1.5
                   },
-
-		'layout': {
-		//ここに、テキストの表示スタイルが入ると思うんだけど・・・。
-		},
 
 
 
@@ -356,7 +369,13 @@ const map = new maplibregl.Map({
                 attribution:"<a href='https://map.maff.go.jp/' target='_blank'>農地ナビ</a>",
 			},
 
+
+
+
 		},
+
+
+
 
 
             layers: [
@@ -375,6 +394,34 @@ map.on('load', function () {
 
 	//ベースマップ、法務省地図読込み（レイヤ設定）
 	SelectMap();
+
+
+
+	// 編集公図インポート（ソース）
+	map.addSource('Nouchi_Pin_GeoJSON', {
+		type : 'geojson',
+		data : 'https://office-shirado.github.io/Moj_Maps/GeoJSON/Nouchi_Pin/Nouchi_Pin_17205_SuzuCity.geojson'
+	});
+
+	// 編集公図インポート（レイヤ）
+	map.addLayer({
+		id: 'Nouchi_Pin_GeoJSON',
+		type: 'symbol',
+		source: 'Nouchi_Pin_GeoJSON',
+		'layout': {
+			"text-field": "{地番}",
+		        "text-font": ["Open Sans Regular"],
+            		"text-size": 12,
+		        "text-offset": [0, 0.6],
+            		"text-anchor": "top"
+		},
+                'paint': {
+	            "text-color": "#000000",
+        	    "text-opacity": 0.8
+                 },
+                minzoom: 16,
+                maxzoom: 23,
+	});
 
 
 	// 現在地取得
