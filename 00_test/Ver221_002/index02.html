@@ -29,7 +29,7 @@
             protocol.add(p);
 
             // we first fetch the header so we can get the center lon, lat of the map.
-            p.getHeader().then(h => {
+            //p.getHeader().then(h => {
                 alert("ddd");
                 const map = new maplibregl.Map({
                     container: 'map',
@@ -64,7 +64,7 @@
                                 }
                             }
                         ]
-                    }
+//                    }
                 });
             })
         </script>
