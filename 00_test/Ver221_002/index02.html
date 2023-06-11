@@ -21,13 +21,13 @@
             let protocol = new pmtiles.Protocol();
             maplibregl.addProtocol("pmtiles",protocol.tile);
 
-//            let PMTILES_URL = "https://x.optgeo.org/a.pmtiles";
-            let PMTILES_URL = "https://shirado.info/maps/Moj_Map/a.pmtiles";
+            let PMTILES_URL = "https://x.optgeo.org/a.pmtiles";
+//            let PMTILES_URL = "https://shirado.info/maps/Moj_Map/a.pmtiles";
 
-//            const p = new pmtiles.PMTiles(PMTILES_URL)
+            const p = new pmtiles.PMTiles(PMTILES_URL)
 
             // this is so we share one instance across the JS code and the map renderer
-//            protocol.add(p);
+            protocol.add(p);
 
             // we first fetch the header so we can get the center lon, lat of the map.
 //            p.getHeader().then(h => {
