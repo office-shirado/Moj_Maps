@@ -30,7 +30,7 @@
             protocol.add(p);
 
             // we first fetch the header so we can get the center lon, lat of the map.
-//            p.getHeader().then(h => {
+            p.getHeader().then(h => {
                 const map = new maplibregl.Map({
                     container: 'map',
                     zoom: 18,
@@ -66,7 +66,7 @@
                             }
                         ]
                     }
-//                });
+                });
                 map.showTileBoundaries = true;
             })
         </script>
