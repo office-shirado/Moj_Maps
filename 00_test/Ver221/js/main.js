@@ -326,11 +326,13 @@ const map = new maplibregl.Map({
             },
 
             // 法務省地図
+	    p.getHeader().then(h => {
 	    MOJ_Map: {
 		type: "vector",
                 url: "pmtiles://" + PMTILES_URL,
                 attribution: '<a href="https://www.moj.go.jp/MINJI/minji05_00494.html" target="_blank">法務省地図</a>'
-            },
+            }
+	    }),
 
 //            MOJ_Map: {
 //                type: 'vector',
