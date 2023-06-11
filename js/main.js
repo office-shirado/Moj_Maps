@@ -9,6 +9,75 @@ function getLocation(getLatLng) {
     });
 };
 
+
+
+
+//ベース地図選択
+function SelectMap(){
+
+	var BaseMapName = document.getElementById('basemaps').value;
+	var zoomlv = map.getZoom()
+
+	if (map.getLayer('GSI_pale')) map.removeLayer('GSI_pale');
+	if (map.getLayer('GSI_seamlessphoto')) map.removeLayer('GSI_seamlessphoto');
+	if (map.getLayer('GSI_ort_USA10')) map.removeLayer('GSI_ort_USA10');
+	if (map.getLayer('GSI_ort_old10')) map.removeLayer('GSI_ort_old10');
+	if (map.getLayer('GSI_gazo1')) map.removeLayer('GSI_gazo1');
+	if (map.getLayer('GSI_gazo2')) map.removeLayer('GSI_gazo2');
+	if (map.getLayer('GSI_gazo3')) map.removeLayer('GSI_gazo3');
+	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
+
+	if (map.getLayer('MOJ_fude-fill')) map.removeLayer('MOJ_fude-fill');
+	if (map.getLayer('MOJ_fude-line')) map.removeLayer('MOJ_fude-line');
+
+	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
+
+	if (map.getLayer('Edited_MOJ_fude-fill')) map.removeLayer('Edited_MOJ_fude-fill');
+	if (map.getLayer('Edited_MOJ_fude-line')) map.removeLayer('Edited_MOJ_fude-line');
+
+
+
+ 	// 空中写真切替え 
+	if( BaseMapName =="GSI_pale-seamlessphoto") 
+	{
+		map.addLayer({
+	          'id': 'GSI_seamlessphoto',
+	          'type': 'raster',
+	          'source': 'GSI_seamlessphoto',
+	          'minzoom': 15,
+	          'maxzoom': 23,
+        	    }),
+		map.addLayer({
+	          'id': 'GSI_pale',
+	          'type': 'raster',
+	          'source': 'GSI_pale',
+	          'minzoom': 0,
+	          'maxzoom': 18,
+        	    });
+		if( zoomlv > 16) {
+				map.setPaintProperty('GSI_pale', 'raster-opacity', 0.4);
+				}
+			else
+				{
+				map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
+				};
+	}
+	else
+	{
+		map.addLayer({
+	          'id': BaseMapName,
+	          'type': 'raster',
+	          'source': BaseMapName,
+	          'minzoom': 14,
+	          'maxzoom': 23,
+        	    });
+	};
+
+	//法務省地図レイヤセット
+	set_MOJ_Map();
+};
+
+
 //法務省地図レイヤ設定
 function set_MOJ_Map() {
 
@@ -115,73 +184,6 @@ function set_MOJ_Map() {
 
 };
 
-
-//ベース地図選択
-function SelectMap(){
-
-	var BaseMapName = document.getElementById('basemaps').value;
-	var zoomlv = map.getZoom()
-
-	if (map.getLayer('GSI_pale')) map.removeLayer('GSI_pale');
-	if (map.getLayer('GSI_seamlessphoto')) map.removeLayer('GSI_seamlessphoto');
-	if (map.getLayer('GSI_ort_USA10')) map.removeLayer('GSI_ort_USA10');
-	if (map.getLayer('GSI_ort_old10')) map.removeLayer('GSI_ort_old10');
-	if (map.getLayer('GSI_gazo1')) map.removeLayer('GSI_gazo1');
-	if (map.getLayer('GSI_gazo2')) map.removeLayer('GSI_gazo2');
-	if (map.getLayer('GSI_gazo3')) map.removeLayer('GSI_gazo3');
-	if (map.getLayer('GSI_gazo4')) map.removeLayer('GSI_gazo4');
-
-	if (map.getLayer('MOJ_fude-fill')) map.removeLayer('MOJ_fude-fill');
-	if (map.getLayer('MOJ_fude-line')) map.removeLayer('MOJ_fude-line');
-
-	if (map.getLayer('MOJ_daihyo')) map.removeLayer('MOJ_daihyo');
-
-	if (map.getLayer('Edited_MOJ_fude-fill')) map.removeLayer('Edited_MOJ_fude-fill');
-	if (map.getLayer('Edited_MOJ_fude-line')) map.removeLayer('Edited_MOJ_fude-line');
-
-
-
- 	// 空中写真切替え 
-	if( BaseMapName =="GSI_pale-seamlessphoto") 
-	{
-		map.addLayer({
-	          'id': 'GSI_seamlessphoto',
-	          'type': 'raster',
-	          'source': 'GSI_seamlessphoto',
-	          'minzoom': 15,
-	          'maxzoom': 23,
-        	    }),
-		map.addLayer({
-	          'id': 'GSI_pale',
-	          'type': 'raster',
-	          'source': 'GSI_pale',
-	          'minzoom': 0,
-	          'maxzoom': 18,
-        	    });
-		if( zoomlv > 16) {
-				map.setPaintProperty('GSI_pale', 'raster-opacity', 0.4);
-				}
-			else
-				{
-				map.setPaintProperty('GSI_pale', 'raster-opacity' , 1.0);
-				};
-	}
-	else
-	{
-		map.addLayer({
-	          'id': BaseMapName,
-	          'type': 'raster',
-	          'source': BaseMapName,
-	          'minzoom': 14,
-	          'maxzoom': 23,
-        	    });
-	};
-
-	//法務省地図レイヤセット
-	set_MOJ_Map();
-};
-
-
 //代表点表示設定
 function SelectView(){
 	var Moj_daihyoten = document.getElementById('daihyoten').value;
@@ -211,6 +213,24 @@ function SelectView(){
 
 
 // マップ設定
+	//PMTiles初期設定
+	//PMTilesプラグインをMapLibre GL JSに入れる。
+	let protocol = new pmtiles.Protocol();
+        maplibregl.addProtocol("pmtiles",protocol.tile);
+
+	//AMX-a
+//        let PMTILES_URL = "https://x.optgeo.org/a.pmtiles";
+
+	//shirado.info
+	let PMTILES_URL = "https://shirado.info/maps/Moj_Map/a.pmtiles";
+
+        const PMTiles01 = new pmtiles.PMTiles(PMTILES_URL)
+
+        // this is so we share one instance across the JS code and the map renderer
+        protocol.add(PMTiles01);
+
+
+
 const map = new maplibregl.Map({
 
     container: 'map',
@@ -222,6 +242,8 @@ const map = new maplibregl.Map({
         maxZoom: 23,
         version: 8,
 	sources: {
+	//ソースリスト
+
             // シームレス空中写真
             GSI_seamlessphoto: {
                 type: 'raster',
@@ -240,7 +262,7 @@ const map = new maplibregl.Map({
                 ],
                 tileSize: 256,
                 attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
-            },
+		            },
 
             // 空中写真（1945年～1950年）
             GSI_ort_USA10: {
@@ -268,11 +290,11 @@ const map = new maplibregl.Map({
                 type: 'raster',
                 tiles: [
                     'https://cyberjapandata.gsi.go.jp/xyz/gazo1/{z}/{x}/{y}.jpg',
-                ],
-                tileSize: 256,
+	                ],
+      		tileSize: 256,
                 attribution:"<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>",
             },
-
+		
             // 空中写真（1979年～1983年）  
             GSI_gazo2: {
                 type: 'raster',
@@ -304,43 +326,54 @@ const map = new maplibregl.Map({
             },
 
             // 法務省地図
-            MOJ_Map: {
-                type: 'vector',
-                tiles: ['https://x.optgeo.org/a/{z}/{x}/{y}.mvt'],
-                minzoom: 5,
-                maxzoom: 16,
-                attribution:"<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
-			},
+	    MOJ_Map: {
+		type: "vector",
+                url: "pmtiles://" + PMTILES_URL,
+                attribution: '<a href="https://www.moj.go.jp/MINJI/minji05_00494.html" target="_blank">法務省地図</a>'
+            },
+
+//            MOJ_Map: {
+//                type: 'vector',
+//                tiles: ['https://x.optgeo.org/a/{z}/{x}/{y}.mvt'],
+//                minzoom: 5,
+//                maxzoom: 16,
+//                attribution:"<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
+//	    },
 
             // 法務省地図（編集）
             Edited_MOJ_Map: {
                 type: 'vector',
-                tiles: ['https://office-shirado.github.io/Moj_Maps/Edited_Moj_Map/{z}/{x}/{y}.pbf'],
+		//Shirado.infoのMaps参照
+                tiles: ['https://shirado.info/maps/Edited_Moj_Map/{z}/{x}/{y}.pbf'],
                 minzoom: 5,
-                maxzoom: 16,
+       		maxzoom: 16,
                 attribution:"<a href='https://www.moj.go.jp/MINJI/minji05_00494.html' target='_blank'>法務省地図</a>",
-			},
+	    },
 
-		},
+	},
+	//ソースリスト
 
-
+	//レイヤリスト
             layers: [
             ]
+	//レイヤリスト
     },
+
 });
 
 
 
 
-    
+
+
 //#################ロード時アクション#################
 
 // ロードアクション
 map.on('load', function () {
 
+
 	//ベースマップ、法務省地図読込み（レイヤ設定）
 	SelectMap();
-
 
 	// 現在地取得
 	var ZoomLv = map.getZoom();
@@ -348,6 +381,8 @@ map.on('load', function () {
 	if (ZoomLv == 4){
 	navigator.geolocation.getCurrentPosition(getLocation);
 	}
+
+
 
 });
 
