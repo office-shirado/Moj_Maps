@@ -219,7 +219,7 @@ const map = new maplibregl.Map({
         center: [139.75417,36.50], // 日本全体
         zoom: 4, // ズームレベル
         minZoom: 5,
-        maxZoom: 23,
+        maxZoom: 20,
         version: 8,
 	sources: {
             // シームレス空中写真
