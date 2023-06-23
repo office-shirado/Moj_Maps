@@ -512,7 +512,7 @@ map.on('click', 'MOJ_fude-fill', (e) => {
     document.getElementById("select_fude_text05").innerText = '座標系：' + zahyokei + '（' + zahyochisyubetu + '）' + '【' + sokuchikeihanbetu + '】';
     document.getElementById("select_fude_text06").innerText = '縮尺（精度）：' + '1/' + shukusyakubunbo + '（' + seidokubun + '）';
     document.getElementById("select_fude_text07").innerText = '緯度経度：' + e.lngLat.lat + ',' + e.lngLat.lng;
-    document.getElementById("select_fude_text08").innerText = 'https://office-shirado.github.io/Moj_Maps/#' + ZoomLv02 + '/' + e.lngLat.lat + '/' + e.lngLat.lng;
+    document.getElementById("select_fude_text08").innerText = 'https://office-shirado.github.io/Moj_Maps/index02.html#' + ZoomLv02 + '/' + e.lngLat.lat + '/' + e.lngLat.lng;
 
 });
 
