@@ -1,80 +1,48 @@
-﻿<!DOCTYPE html>
-<html lang="ja">
+<!doctype html>
+<html>
 <head>
-    <meta charset="utf-8">
-    <title>今ここ何番地？（法務省地図 on MapLibre GL JS）</title>
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0" />
-    <meta name="description" content="法務省地図（公共座標）と地理院タイルを重ねたシンプルなＷｅｂＧＩＳ">
-    <!-- MapLibre -->
-    <script src='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js'></script>
-    <link href='https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css' rel='stylesheet' />
+<meta charset="utf-8">
+<meta name="description" content="オフィス白土のＷｅｂＧＩＳ">
 
-    <!-- ジオコーダー（OpenStreetmap） -->
-    <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.2.0/dist/maplibre-gl-geocoder.css" type="text/css" />
-
-    <!-- FlatGeoBuf -->
-    <script src="https://unpkg.com/flatgeobuf@3.22.0/dist/flatgeobuf-geojson.min.js"></script>
-    <script src="https://unpkg.com/json-formatter-js"></script>
-
-    <!-- Underscore -->
-    <script type="text/javascript" src="https://underscorejs.org/underscore-min.js"></script>
-
-
-    <link href="css/style.css" rel="stylesheet">
-
+<title>「今ここ何番地？」試験的移転のお知らせ</title>
 
 </head>
+
+
 <body>
 
+	<center>
+	<br><br>
+	<h1><strong>～「今ここ何番地？」試験的移転のお知らせ ～</strong></h1>
+	<h3>
+	いつも「今ここ何番地？」をご利用頂きありがとうございます。<br>
+	この度、別サーバー（Office-Shirado.com）で「今ここ何番地？」を<br>
+	運用し始めました。
+	</h3><br>
+	<h1><strong><a href ="https://www.office-shirado.com/imakoko/" target="_blank">今ここ何番地？<br>（Office-Shirado.com）</a></strong></h1><br>
+	<h3>
+	つきましては、サーバー負荷やアクセス状況を把握するために<br>
+	本サイトのトップをこのご案内にさせて頂きました。<br>
+	上記サイトでは、メンバー限定のデータ・追加機能を考えております。
+	<br><br>
+	無料版もありますので、そちらをお使いいただければと思います。<br>
+	誠に勝手ながら、予告なく無料版の機能を一部制限することがあります。<br>
+	ご理解の程、宜しくお願い致します。
+	<br><br>
+	新サーバー（Office-Shirado.com）での運用で問題ない場合は、新サーバーに完全移行致します。<br>
+	本サイト（Ｇｉｔｈｕｂ）のデータは技術的公開データとして残しておきますが、<br>
+	機能の一部を制限する可能性はありますことをご理解願います。<br>
+	また、新サーバーでの運用で支障が出た時などのバックアップとして利用することも可能です。<br>
+	</h3><br>
+	<h1><strong><a href ="https://office-shirado.github.io/Moj_Maps/index02.html" target="_blank">今ここ何番地？<br>（Github）</a></strong></h1><br>
+	<h3>
+	甚だ急なご案内となりましたが、今後とも「今ここ何番地？」をご利用いただければと思います。
+	</h3><br>
 
-    <div id="map"></div>
-    <script src="js/main.js"></script>
+	</center>
 
 
 
-
-    <div id="info01">
-      <center>
-      <a href ="https://office-shirado.github.io/Moj_Maps/" target="_self"><b><big>今ここ何番地？</big></b><small>(Ver2.16)</small></a><br>
-      <small>法務省地図 on MapLibre</small><br>
-      <a href="https://github.com/office-shirado/Moj_Maps" target="_blank"><small>Office Shirado（GitHub)</small></a>
-      </center>
-    </div>
-
-    <div class = "select_fudetext">
-    <textarea id="select_fude_text01">地番区域・地番</textarea><br>
-    <textarea id="select_fude_text02">地番区域</textarea><br>
-    <textarea id="select_fude_text03">地番</textarea><br>
-    <textarea id="select_fude_text04">地図名</textarea><br>
-    <textarea id="select_fude_text05">座標系</textarea><br>
-    <textarea id="select_fude_text06">縮尺（精度）</textarea><br>
-    <textarea id="select_fude_text07">緯度経度</textarea>
-    <textarea id="select_fude_text08">https://office-shirado.github.io/Moj_Maps/</textarea>
-    </div>
-
-    <div id="info02">
-      <select id ="basemaps" onchange="SelectMap()">
-        <option value="GSI_pale-seamlessphoto">【全国】淡色地図・空中写真</option>
-        <option value="GSI_ort_USA10">【一部】1945年～1950年</option>
-        <option value="GSI_ort_old10"> 【一部】1961年～1969年</option>
-        <option value="GSI_gazo1">【全国】1974年～1978年</option>
-        <option value="GSI_gazo2">【一部】1979年～1983年</option>
-        <option value="GSI_gazo3">【一部】1984年～1986年</option>
-        <option value="GSI_gazo4">【一部】1988年～1990年</option>
-        <option value="NoBaseMap">【地理院タイルなし】</option>
-      </select>
-      <br>
-      <select id ="daihyoten" onchange="SelectView()">
-        <option value="visible">【法務省地図】代表点あり</option>
-        <option value="invisible" selected>【法務省地図】代表点なし</option>
-      </select>
-      <br>
-      <center>
-      <a href='http://www.touki.or.jp/' target='_blank'>登記情報提供サービス</a><br>
-      <small>Supecial Thanks:MOJ,GSI,amx-a</small>
-      </center>
-    </div>
 
 </body>
 </html>
